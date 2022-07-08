@@ -60,13 +60,13 @@ class BowlingGameTest {
     /*
     The number of rolls may be odd if the last frame is a spare.
     (Or if the game is still ongoing).
-    But for now, we can't calculate a spare.
-    @Test
-    @DisplayName("Odd number of rolls if spare in last frame")
-    void TestLastFrameSpare() {
-
-    }
     */
+    @Test
+    @DisplayName("Spare in last frame grants one bonus roll")
+    void TestLastFrameIsASpare() {
+        int[] lastFrameSpare = {0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 4, 4, 0, 0, 5, 5, 7, 2};
+        assertEquals(error_value, game.scoreGameTotal(lastFrameSpare));
+    }
 
     @Test
     @DisplayName("Spare sums correctly")

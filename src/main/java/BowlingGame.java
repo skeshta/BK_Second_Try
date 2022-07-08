@@ -9,7 +9,17 @@ public class BowlingGame {
 
     private boolean gameValid(int[] frames) {
         boolean allFramesOK;
-        allFramesOK = (frames.length % 2 == 0);
+        int totalRolls = frames.length;
+        allFramesOK = totalRolls % 2 == 0;
+        if (totalRolls > 22) {
+            allFramesOK = false;
+        } else if (totalRolls == 22) {
+            int lastFrameRollOne = frames[20];
+            int lastFrameRollTwo = frames[21];
+            if (frameIsASpare(lastFrameRollOne, lastFrameRollTwo)) {
+                allFramesOK = (lastFrameRollTwo == 0);
+            }
+        }
         return allFramesOK;
     }
 
@@ -30,27 +40,27 @@ public class BowlingGame {
 
         if (!gameValid(frames)) {
             return error_value;
-        }
+        } else {
+            int totalRolls = frames.length;
+            int scoreCurrentFrame;
+            int scoreNextFrame;
+            int rollOne;
+            int rollTwo;
+            for (int currentRoll = 0; currentRoll < totalRolls; currentRoll += 2) {
+                rollOne = frames[currentRoll];
+                rollTwo = frames[currentRoll + 1];
+                scoreCurrentFrame = scoreSingleFrame(rollOne, rollTwo);
 
-        int totalRolls = frames.length;
-        int scoreCurrentFrame;
-        int scoreNextFrame;
-        int rollOne;
-        int rollTwo;
-        for (int currentRoll = 0; currentRoll < totalRolls; currentRoll += 2) {
-            rollOne = frames[currentRoll];
-            rollTwo = frames[currentRoll + 1];
-            scoreCurrentFrame = scoreSingleFrame(rollOne, rollTwo);
-
-            if (frameIsAStrike(rollOne, rollTwo)) {
-                scoreNextFrame = scoreSingleFrame(frames[currentRoll + 2], frames[currentRoll + 3]);
-                scoreCurrentFrame += scoreNextFrame;
-            } else if (frameIsASpare(rollOne, rollTwo)) {
-                scoreCurrentFrame += frames[currentRoll + 2];
+                if (frameIsAStrike(rollOne, rollTwo)) {
+                    scoreNextFrame = scoreSingleFrame(frames[currentRoll + 2], frames[currentRoll + 3]);
+                    scoreCurrentFrame += scoreNextFrame;
+                } else if (frameIsASpare(rollOne, rollTwo)) {
+                    scoreCurrentFrame += frames[currentRoll + 2];
+                }
+                gameScore += scoreCurrentFrame;
             }
-            gameScore += scoreCurrentFrame;
+            return gameScore;
         }
-        return gameScore;
     }
 
     public int scoreSingleFrame(int rollOne, int rollTwo) {
