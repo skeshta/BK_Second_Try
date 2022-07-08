@@ -18,18 +18,23 @@ class BowlingGameTest {
         game = null;
     }
 
+
+    /*
+    Unnecessary, since we have other tests to check the score.
+    If the score did start as something other than 0, those other tests would catch it.
     @Test
     @DisplayName("Initial score is 0")
     void TestInitialScore() {
         assertEquals(0, game.getScore());
     }
+    */
 
     @Test
     @DisplayName("A frame with 1 and 7 has score 8")
     void TestSingleFrameNoStrikeNoSpare() {
         int rollOne = 1;
         int rollTwo = 7;
-        assertEquals(8, game.nextFrame(rollOne, rollTwo));
+        assertEquals(8, game.scoreSingleFrame(rollOne, rollTwo));
     }
 
     @Test
@@ -38,7 +43,7 @@ class BowlingGameTest {
         int error_value = -2147483648;
         int rollOne = 4;
         int rollTwo = 9;
-        assertEquals(error_value , game.nextFrame(rollOne, rollTwo));
+        assertEquals(error_value , game.scoreSingleFrame(rollOne, rollTwo));
     }
 
     @Test
@@ -47,7 +52,14 @@ class BowlingGameTest {
         int error_value = -2147483648;
         int rollOne = -4;
         int rollTwo = 9;
-        assertEquals(error_value , game.nextFrame(rollOne, rollTwo));
+        assertEquals(error_value , game.scoreSingleFrame(rollOne, rollTwo));
+    }
+
+    @Test
+    @DisplayName("Two regular frames sum correctly")
+    void TestSumTwoRegularFrames() {
+        int[] fourRolls = {1, 3, 2, 5};
+        assertEquals(11, game.scoreGameTotal(fourRolls));
     }
 
 }

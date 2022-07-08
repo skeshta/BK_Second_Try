@@ -1,25 +1,25 @@
 public class BowlingGame {
-    private int gameScore = 0;
 
-    //Get score
-    public int getScore() {
+    public boolean frameValid(int rollOne, int rollTwo) {
+        boolean bothRollsOK;
+        bothRollsOK = rollOne + rollTwo <= 10 && Math.min(rollOne, rollTwo) >= 0;
+        return bothRollsOK;
+    }
+
+    public int scoreGameTotal(int[] frames) {
+        int gameScore = 0;
         return gameScore;
     }
 
-    public boolean checkInput(int rollOne, int rollTwo) {
-        boolean inputOK;
-        inputOK = rollOne + rollTwo <= 10 && Math.min(rollOne, rollTwo) >= 0;
-        return inputOK;
-    }
-
-    public int nextFrame(int rollOne, int rollTwo) {
+    public int scoreSingleFrame(int rollOne, int rollTwo) {
         int error_value = -2147483648;
-        if (!checkInput(rollOne, rollTwo)) {
+        int frameScore = 0;
+        if (!frameValid(rollOne, rollTwo)) {
             return error_value;
         }
         else {
-            gameScore += rollOne + rollTwo;
-            return gameScore;
+            frameScore += rollOne + rollTwo;
+            return frameScore;
         }
     }
 
