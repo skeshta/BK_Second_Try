@@ -8,6 +8,10 @@ public class BowlingGame {
 
     public int scoreGameTotal(int[] frames) {
         int gameScore = 0;
+        int totalRolls = frames.length;
+        for (int i=0; i<totalRolls; i+=2) {
+            gameScore += scoreSingleFrame(frames[i], frames[i+1]);
+        }
         return gameScore;
     }
 
