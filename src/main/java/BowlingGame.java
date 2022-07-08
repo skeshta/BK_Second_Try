@@ -13,6 +13,18 @@ public class BowlingGame {
         return allFramesOK;
     }
 
+    private boolean frameIsAStrike(int rollOne, int rollTwo) {
+        boolean isStrike;
+        isStrike = (rollOne == 10 && rollTwo == 0);
+        return isStrike;
+    }
+
+    private boolean frameIsASpare(int rollOne, int rollTwo) {
+        boolean isSpare;
+        isSpare = scoreSingleFrame(rollOne, rollTwo) == 10 && rollOne != 10;
+        return isSpare;
+    }
+
     public int scoreGameTotal(int[] frames) {
         int gameScore = 0;
 
@@ -22,13 +34,19 @@ public class BowlingGame {
 
         int totalRolls = frames.length;
         int scoreCurrentFrame;
+        int scoreNextFrame;
+        int rollOne;
+        int rollTwo;
         for (int currentRoll = 0; currentRoll < totalRolls; currentRoll += 2) {
-            scoreCurrentFrame = scoreSingleFrame(frames[currentRoll], frames[currentRoll+1]);
-            if (scoreCurrentFrame == 10) {
-                scoreCurrentFrame += frames[currentRoll+2];
-                if (frames[currentRoll] == 10) {
-                    scoreCurrentFrame += frames[currentRoll+3];
-                }
+            rollOne = frames[currentRoll];
+            rollTwo = frames[currentRoll + 1];
+            scoreCurrentFrame = scoreSingleFrame(rollOne, rollTwo);
+
+            if (frameIsAStrike(rollOne, rollTwo)) {
+                scoreNextFrame = scoreSingleFrame(frames[currentRoll + 2], frames[currentRoll + 3]);
+                scoreCurrentFrame += scoreNextFrame;
+            } else if (frameIsASpare(rollOne, rollTwo)) {
+                scoreCurrentFrame += frames[currentRoll + 2];
             }
             gameScore += scoreCurrentFrame;
         }
