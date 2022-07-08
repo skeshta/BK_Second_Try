@@ -21,8 +21,13 @@ public class BowlingGame {
         }
 
         int totalRolls = frames.length;
+        int scoreCurrentFrame = 0;
         for (int i=0; i<totalRolls; i+=2) {
-            gameScore += scoreSingleFrame(frames[i], frames[i+1]);
+            scoreCurrentFrame = scoreSingleFrame(frames[i], frames[i+1]);
+            if (scoreCurrentFrame == 10) {
+                scoreCurrentFrame += frames[i+2];
+            }
+            gameScore += scoreCurrentFrame;
         }
         return gameScore;
     }
