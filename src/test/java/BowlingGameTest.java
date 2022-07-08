@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BowlingGameTest {
     private BowlingGame game;
+    private final int error_value = -2147483648;
 
     @BeforeEach
     void setUp() {
@@ -40,7 +41,6 @@ class BowlingGameTest {
     @Test
     @DisplayName("Both rolls must be <= 10")
     void TestNumbersTooHigh() {
-        int error_value = -2147483648;
         int rollOne = 4;
         int rollTwo = 9;
         assertEquals(error_value , game.scoreSingleFrame(rollOne, rollTwo));
@@ -49,7 +49,6 @@ class BowlingGameTest {
     @Test
     @DisplayName("Both rolls must be >= 0")
     void TestNumbersTooLow() {
-        int error_value = -2147483648;
         int rollOne = -4;
         int rollTwo = 9;
         assertEquals(error_value , game.scoreSingleFrame(rollOne, rollTwo));
@@ -60,6 +59,13 @@ class BowlingGameTest {
     void TestSumTwoRegularFrames() {
         int[] fourRolls = {1, 3, 2, 5};
         assertEquals(11, game.scoreGameTotal(fourRolls));
+    }
+
+    @Test
+    @DisplayName("Number of rolls is even")
+    void TestOddNumberOfRolls() {
+        int[] fiveRolls = {1, 2, 1, 2, 1};
+        assertEquals(error_value, game.scoreGameTotal(fiveRolls));
     }
 
 }
