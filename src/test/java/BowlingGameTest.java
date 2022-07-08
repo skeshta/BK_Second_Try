@@ -85,4 +85,32 @@ class BowlingGameTest {
         assertEquals(37, game.scoreGameTotal(lastFrameSpare));
     }
 
+    @Test
+    @DisplayName("10 frames sum correctly")
+    void TestFullGame() {
+        int[] lastFrameSpare = {10, 0, 0, 10, 0, 3, 2, 2, 0, 0, 3, 3, 10, 0, 4, 6, 7, 0, 10, 0, 7, 3};
+        assertEquals(107, game.scoreGameTotal(lastFrameSpare));
+    }
+
+    @Test
+    @DisplayName("All zeroes sums to 0")
+    void TestAllZeroes() {
+        int[] allZeroes = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        assertEquals(0, game.scoreGameTotal(allZeroes));
+    }
+
+    @Test
+    @DisplayName("Two strikes sum correctly")
+    void TestTwoStrikes() {
+        int[] twoStrikes = {10, 0, 10, 0, 1, 4};
+        assertEquals(41, game.scoreGameTotal(twoStrikes));
+    }
+
+    @Test
+    @DisplayName("All strikes sums to 300")
+    void TestAllStrikes() {
+        int[] allStrikes = {10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 10};
+        assertEquals(300, game.scoreGameTotal(allStrikes));
+    }
+
 }

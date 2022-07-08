@@ -54,7 +54,11 @@ public class BowlingGame {
 
                 if (frameIsAStrike(rollOne, rollTwo)) {
                     scoreNextFrame = scoreSingleFrame(frames[currentRoll + 2], frames[currentRoll + 3]);
-                    scoreCurrentFrame += scoreNextFrame;
+                    if (currentRoll != 18) {
+                        scoreCurrentFrame += scoreNextFrame;
+                    } else {
+                        scoreCurrentFrame += (frames[currentRoll + 2] + frames[currentRoll + 3]);
+                    }
                 } else if (frameIsASpare(rollOne, rollTwo)) {
                     scoreCurrentFrame += frames[currentRoll + 2];
                 }
@@ -65,12 +69,12 @@ public class BowlingGame {
     }
 
     public int scoreSingleFrame(int rollOne, int rollTwo) {
-        int frameScore = 0;
+        int frameScore;
         if (!frameValid(rollOne, rollTwo)) {
             return error_value;
         }
         else {
-            frameScore += rollOne + rollTwo;
+            frameScore = rollOne + rollTwo;
             return frameScore;
         }
     }
