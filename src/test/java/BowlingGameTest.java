@@ -15,6 +15,7 @@ class BowlingGameTest {
 
     @AfterEach
     void tearDown() {
+        game = null;
     }
 
     @Test
@@ -24,9 +25,10 @@ class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("A regular frame with 1 and 7 has score 8")
+    @DisplayName("A frame with 1 and 7 has score 8")
     void TestSingleFrameNoStrikeNoSpare() {
-        int[] SingleFrameNoStrikeNoSpare = {1, 7};
-        assertEquals(8, game.nextFrame(SingleFrameNoStrikeNoSpare));
+        int rollOne = 1;
+        int rollTwo = 7;
+        assertEquals(8, game.nextFrame(rollOne, rollTwo));
     }
 }

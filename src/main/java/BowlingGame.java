@@ -6,8 +6,8 @@ public class BowlingGame {
         return gameScore;
     }
 
-    public int nextFrame(int[] frameScore) {
-        gameScore += frameScore[0] + frameScore[1];
+    public int nextFrame(int rollOne, int rollTwo) {
+        gameScore += rollOne + rollTwo;
         return gameScore;
     }
 
