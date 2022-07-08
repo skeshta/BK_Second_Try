@@ -31,4 +31,13 @@ class BowlingGameTest {
         int rollTwo = 7;
         assertEquals(8, game.nextFrame(rollOne, rollTwo));
     }
+
+    @Test
+    @DisplayName("Both rolls must be <= 10")
+    void TestNumbersTooHigh() {
+        int rollOne = 4;
+        int rollTwo = 9;
+        assertEquals(-2147483648 , game.nextFrame(rollOne, rollTwo));
+    }
+
 }
