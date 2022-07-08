@@ -27,6 +27,6 @@ class BowlingGameTest {
     @DisplayName("A regular frame with 1 and 7 has score 8")
     void TestSingleFrameNoStrikeNoSpare() {
         int[] SingleFrameNoStrikeNoSpare = {1, 7};
-        assertEquals(8, game.getScore(SingleFrameNoStrikeNoSpare));
+        assertEquals(8, game.nextFrame(SingleFrameNoStrikeNoSpare));
     }
 }
