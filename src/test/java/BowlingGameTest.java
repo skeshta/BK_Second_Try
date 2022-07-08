@@ -19,17 +19,6 @@ class BowlingGameTest {
         game = null;
     }
 
-
-    /*
-    Unnecessary, since we have other tests to check the score.
-    If the score did start as something other than 0, those other tests would catch it.
-    @Test
-    @DisplayName("Initial score is 0")
-    void TestInitialScore() {
-        assertEquals(0, game.getScore());
-    }
-    */
-
     @Test
     @DisplayName("A frame with 1 and 7 has score 8")
     void TestSingleFrameNoStrikeNoSpare() {
@@ -84,6 +73,13 @@ class BowlingGameTest {
     void TestSpare() {
         int[] spare = {1, 9, 4, 3};
         assertEquals(21, game.scoreGameTotal(spare));
+    }
+
+    @Test
+    @DisplayName("Strike sums correctly")
+    void TestStrike() {
+        int[] strike = {10, 0, 2, 6};
+        assertEquals(26, game.scoreGameTotal(strike));
     }
 
 }
