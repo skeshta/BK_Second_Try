@@ -42,7 +42,7 @@ public class BowlingGame {
         if (!gameValid(frames)) {
             return error_value;
         } else {
-            int totalRolls = frames.length;
+            int totalRolls = Math.min(frames.length, 20);
             int scoreCurrentFrame;
             int scoreNextFrame;
             int rollOne;
