@@ -35,9 +35,10 @@ class BowlingGameTest {
     @Test
     @DisplayName("Both rolls must be <= 10")
     void TestNumbersTooHigh() {
+        int error_value = -2147483648;
         int rollOne = 4;
         int rollTwo = 9;
-        assertEquals(-2147483648 , game.nextFrame(rollOne, rollTwo));
+        assertEquals(error_value , game.nextFrame(rollOne, rollTwo));
     }
 
 }

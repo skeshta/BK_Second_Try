@@ -7,8 +7,14 @@ public class BowlingGame {
     }
 
     public int nextFrame(int rollOne, int rollTwo) {
-        gameScore += rollOne + rollTwo;
-        return gameScore;
+        int error_value = -2147483648;
+        if (rollOne + rollTwo > 10) {
+            return error_value;
+        }
+        else {
+            gameScore += rollOne + rollTwo;
+            return gameScore;
+        }
     }
 
 }
