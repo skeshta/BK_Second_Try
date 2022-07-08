@@ -41,4 +41,13 @@ class BowlingGameTest {
         assertEquals(error_value , game.nextFrame(rollOne, rollTwo));
     }
 
+    @Test
+    @DisplayName("Both rolls must be >= 0")
+    void TestNumbersTooLow() {
+        int error_value = -2147483648;
+        int rollOne = -4;
+        int rollTwo = 9;
+        assertEquals(error_value , game.nextFrame(rollOne, rollTwo));
+    }
+
 }
