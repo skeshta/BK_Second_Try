@@ -17,7 +17,7 @@ public class BowlingGame {
             int lastFrameRollOne = frames[20];
             int lastFrameRollTwo = frames[21];
             if (frameIsASpare(lastFrameRollOne, lastFrameRollTwo)) {
-                allFramesOK = (lastFrameRollTwo == 0);
+                allFramesOK = lastFrameRollTwo == 0;
             }
         }
         return allFramesOK;
