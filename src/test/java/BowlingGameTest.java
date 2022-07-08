@@ -62,8 +62,8 @@ class BowlingGameTest {
     (Or if the game is still ongoing).
     */
     @Test
-    @DisplayName("Spare in last frame grants one bonus roll")
-    void TestLastFrameIsASpare() {
+    @DisplayName("Spare in last frame grants exactly one bonus roll")
+    void TestLastFrameIsAFalseSpare() {
         int[] lastFrameSpare = {0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 4, 4, 0, 0, 5, 5, 7, 2};
         assertEquals(error_value, game.scoreGameTotal(lastFrameSpare));
     }

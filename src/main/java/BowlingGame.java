@@ -14,10 +14,11 @@ public class BowlingGame {
         if (totalRolls > 22) {
             allFramesOK = false;
         } else if (totalRolls == 22) {
-            int lastFrameRollOne = frames[20];
-            int lastFrameRollTwo = frames[21];
+            int lastFrameRollOne = frames[18];
+            int lastFrameRollTwo = frames[19];
             if (frameIsASpare(lastFrameRollOne, lastFrameRollTwo)) {
-                allFramesOK = lastFrameRollTwo == 0;
+                int bonusFrameRollTwo = frames[21];
+                allFramesOK = (bonusFrameRollTwo == 0);
             }
         }
         return allFramesOK;
