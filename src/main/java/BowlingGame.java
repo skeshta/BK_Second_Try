@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class BowlingGame {
     private BowlingFrame[] frames;
     private int numberOfFrames;
@@ -21,9 +23,9 @@ public class BowlingGame {
             // There is a half frame. Fill its second half with a 0.
             evenRolls = new int[numberOfRolls + 1];
             System.arraycopy(rolls, 0, evenRolls, 0, numberOfRolls);
-            evenRolls[numberOfRolls + 1] = 0;
+            evenRolls[numberOfRolls] = 0;
         } else {
-            evenRolls = new int[numberOfRolls];
+            evenRolls = rolls;
         }
         return evenRolls;
     }
@@ -101,7 +103,6 @@ public class BowlingGame {
     }
 
     private BowlingFrame[] cleanInput(int[] rolls) {
-        int numberOfRolls = rolls.length;
         int[] cleanRolls;
         BowlingFrame[] cleanFrames;
         cleanRolls = oddRollsToEven(rolls);
@@ -111,45 +112,42 @@ public class BowlingGame {
         return cleanFrames;
     }
 
-    private boolean gameValid() {
-        boolean allFramesOK;
-        allFramesOK = numberOfFrames <= 10;
-        if (numberOfFrames == 11) {
-            BowlingFrame lastGenuineFrame = frames[9];
-            if (lastGenuineFrame.isASpare()) {
-                int bonusFrameRollTwo = frames[10].getRollTwo();
-                allFramesOK = (bonusFrameRollTwo == 0);
-            }
-        }
-        return allFramesOK;
-    }
-
     public int score() {
         int gameScore = 0;
-        int numberOfGenuineFrames = Math.min(numberOfFrames, 10);
+        int numberOfFrames = Math.min(frames.length, 10) - 1;
+        int numberOfGenuineFrames = numberOfFrames - 1;
+        int[] frameScores = new int[numberOfFrames];
         int scoreCurrentFrame;
-        int scoreNextFrame;
-        BowlingFrame currentFrame;
-        BowlingFrame nextFrame;
-        nextFrame = new BowlingFrame();
-        for (int frameIndex = 0; frameIndex < numberOfGenuineFrames; frameIndex ++) {
+
+        BowlingFrame currentFrame = new BowlingFrame();
+        int currentFrameScore;
+        for (int frameIndex = 0; frameIndex < numberOfFrames; frameIndex++) {
             currentFrame = frames[frameIndex];
-            scoreCurrentFrame = currentFrame.frameSum();
-            if (currentFrame.isAStrike()) {
-                nextFrame = frames[frameIndex +1];
-                scoreNextFrame = nextFrame.frameSum();
-                if (frameIndex != 9) {
-                    scoreCurrentFrame += scoreNextFrame;
-                    if (nextFrame.isAStrike()) {
-                        scoreCurrentFrame += frames[frameIndex + 2].getRollOne();
-                    }
-                } else {
-                    scoreCurrentFrame += nextFrame.frameSum();
-                }
-            } else if (currentFrame.isASpare()) {
-                scoreCurrentFrame += nextFrame.getRollTwo();
+            currentFrameScore = currentFrame.frameSum();
+            frameScores[frameIndex] = currentFrameScore;
+        }
+
+        BowlingFrame nextFrame;
+        int bonusScore;
+        for (int frameIndex = 0; frameIndex < numberOfGenuineFrames; frameIndex++) {
+            currentFrame = frames[frameIndex];
+            currentFrameScore = frameScores[frameIndex];
+            if (currentFrame.isASpare()) {
+                nextFrame = frames[frameIndex + 1];
+                bonusScore = nextFrame.getRollOne();
+                currentFrameScore += bonusScore;
+                frameScores[frameIndex] = currentFrameScore;
+            } else if (currentFrame.isAStrike()) {
+                nextFrame = frames[frameIndex + 1];
+                bonusScore = nextFrame.frameSum();
+                currentFrameScore += bonusScore;
+                frameScores[frameIndex] = currentFrameScore;
             }
-            gameScore += scoreCurrentFrame;
+        }
+
+        for (int frameIndex = 0; frameIndex < numberOfFrames; frameIndex++) {
+            currentFrameScore = frameScores[frameIndex];
+            gameScore += currentFrameScore;
         }
         return gameScore;
     }

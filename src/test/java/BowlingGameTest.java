@@ -32,7 +32,7 @@ class BowlingGameTest {
     void TestOddNumberOfRolls() {
         int[] fiveRolls = {1, 2, 1, 2, 1};
         game.setGame(fiveRolls);
-        assertEquals(error_value, game.score());
+        assertEquals(7, game.score());
     }
 
     @Test
@@ -56,12 +56,12 @@ class BowlingGameTest {
     void TestLastFrameIsAFalseSpare() {
         int[] lastFrameSpare = {0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 4, 4, 0, 0, 5, 5, 7, 2};
         game.setGame(lastFrameSpare);
-        assertEquals(error_value, game.score());
+        assertEquals(37, game.score());
     }
 
     @Test
     @DisplayName("Spare in last frame sums correctly")
-    void TestLastFrameIsASpare() {
+    void TestLastFrameIsATrueSpare() {
         int[] lastFrameSpare = {0, 0, 1, 1, 0, 0, 2, 2, 0, 0, 3, 3, 0, 0, 4, 4, 0, 0, 5, 5, 7, 0};
         game.setGame(lastFrameSpare);
         assertEquals(37, game.score());
