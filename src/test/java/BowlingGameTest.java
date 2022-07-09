@@ -116,10 +116,9 @@ class BowlingGameTest {
     */
 
     /*
-    "I've been adding only the score of the very next frame, not of the next two frames."
-
-    What did I say about reading the problem carefully? Don't confuse rolls and frames!
-    Clearly, I need (a) tests for a single strike, (b) to slow down a little.
-     */
+    A strike apparently counts as a frame of only one roll, for the purposes of score calculation.
+    Hence, two strikes in a row do indeed change the score calculation.
+    Good to know I wasn't entirely on the wrong track.
+    */
 
 }

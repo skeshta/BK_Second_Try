@@ -45,21 +45,28 @@ public class BowlingGame {
             int totalRolls = Math.min(frames.length, 20);
             int scoreCurrentFrame;
             int scoreNextFrame;
-            int rollOne;
-            int rollTwo;
+            int currentRollOne;
+            int currentRollTwo;
+            int nextRollOne;
+            int nextRollTwo;
             for (int currentRoll = 0; currentRoll < totalRolls; currentRoll += 2) {
-                rollOne = frames[currentRoll];
-                rollTwo = frames[currentRoll + 1];
-                scoreCurrentFrame = scoreSingleFrame(rollOne, rollTwo);
+                currentRollOne = frames[currentRoll];
+                currentRollTwo = frames[currentRoll + 1];
+                scoreCurrentFrame = scoreSingleFrame(currentRollOne, currentRollTwo);
 
-                if (frameIsAStrike(rollOne, rollTwo)) {
-                    scoreNextFrame = scoreSingleFrame(frames[currentRoll + 2], frames[currentRoll + 3]);
+                if (frameIsAStrike(currentRollOne, currentRollTwo)) {
+                    nextRollOne = frames[currentRoll + 2];
+                    nextRollTwo = frames[currentRoll + 3];
+                    scoreNextFrame = scoreSingleFrame(nextRollOne, nextRollTwo);
                     if (currentRoll != 18) {
                         scoreCurrentFrame += scoreNextFrame;
+                        if (nextRollOne == 10) {
+                            scoreCurrentFrame += frames[currentRoll + 4];
+                        }
                     } else {
                         scoreCurrentFrame += (frames[currentRoll + 2] + frames[currentRoll + 3]);
                     }
-                } else if (frameIsASpare(rollOne, rollTwo)) {
+                } else if (frameIsASpare(currentRollOne, currentRollTwo)) {
                     scoreCurrentFrame += frames[currentRoll + 2];
                 }
                 gameScore += scoreCurrentFrame;
