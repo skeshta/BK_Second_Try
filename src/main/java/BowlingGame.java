@@ -45,7 +45,8 @@ public class BowlingGame {
     private BowlingFrame[] rollsToFrames(int[] rolls) {
         BowlingFrame[] frames;
         numberOfFrames = rolls.length / 2;
-        frames = new BowlingFrame[numberOfFrames + 1];
+        //frames = new BowlingFrame[numberOfFrames + 1];
+        frames = new BowlingFrame[numberOfFrames];
         BowlingFrame currentFrame;
         int rollIndex;
         for (int frameIndex = 0; frameIndex < numberOfFrames; frameIndex++) {
@@ -114,12 +115,10 @@ public class BowlingGame {
 
     public int score() {
         int gameScore = 0;
-        int numberOfFrames = Math.min(frames.length, 10) - 1;
-        int numberOfGenuineFrames = numberOfFrames - 1;
+        int numberOfFrames = Math.min(frames.length, 10);
         int[] frameScores = new int[numberOfFrames];
-        int scoreCurrentFrame;
 
-        BowlingFrame currentFrame = new BowlingFrame();
+        BowlingFrame currentFrame;
         int currentFrameScore;
         for (int frameIndex = 0; frameIndex < numberOfFrames; frameIndex++) {
             currentFrame = frames[frameIndex];
@@ -129,7 +128,7 @@ public class BowlingGame {
 
         BowlingFrame nextFrame;
         int bonusScore;
-        for (int frameIndex = 0; frameIndex < numberOfGenuineFrames; frameIndex++) {
+        for (int frameIndex = 0; frameIndex < numberOfFrames; frameIndex++) {
             currentFrame = frames[frameIndex];
             currentFrameScore = frameScores[frameIndex];
             if (currentFrame.isASpare()) {
@@ -139,7 +138,12 @@ public class BowlingGame {
                 frameScores[frameIndex] = currentFrameScore;
             } else if (currentFrame.isAStrike()) {
                 nextFrame = frames[frameIndex + 1];
-                bonusScore = nextFrame.frameSum();
+                if (nextFrame.isAStrike()) {
+                    nextFrame = frames[frameIndex + 2];
+                    bonusScore = 10 + nextFrame.getRollOne();
+                } else {
+                    bonusScore = nextFrame.frameSum();
+                }
                 currentFrameScore += bonusScore;
                 frameScores[frameIndex] = currentFrameScore;
             }
@@ -149,6 +153,7 @@ public class BowlingGame {
             currentFrameScore = frameScores[frameIndex];
             gameScore += currentFrameScore;
         }
+
         return gameScore;
     }
 
