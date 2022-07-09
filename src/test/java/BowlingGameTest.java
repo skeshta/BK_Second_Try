@@ -91,13 +91,12 @@ class BowlingGameTest {
         assertEquals(41, game.score());
     }
 
-    /*
     @Test
     @DisplayName("All strikes sums to 300")
     void TestAllStrikes() {
-        int[] allStrikes = {10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 10};
-        assertEquals(300, game.scoreGameTotal(allStrikes));
+        int[] allStrikes = {10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0};
+        game.setGame(allStrikes);
+        assertEquals(300, game.score());
     }
-    */
 
 }

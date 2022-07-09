@@ -19,6 +19,8 @@ public class BowlingFrame {
 
     private boolean frameValid() {
         boolean bothRollsOK;
+        //System.out.println("rollOne " + rollOne);
+        //System.out.println("rollTwo " + rollTwo);
         bothRollsOK = rollOne + rollTwo <= 10 && Math.min(rollOne, rollTwo) >= 0;
         return bothRollsOK;
     }

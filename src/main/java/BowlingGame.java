@@ -33,9 +33,9 @@ public class BowlingGame {
     private int[] cutOffExtraRolls(int[] rolls) {
         int[] shortRolls;
         int numberOfRolls = rolls.length;
-        if (numberOfRolls > 22) {
-            shortRolls = new int[22];
-            System.arraycopy(rolls, 0, shortRolls, 0, 22);
+        if (numberOfRolls > 24) {
+            shortRolls = new int[24];
+            System.arraycopy(rolls, 0, shortRolls, 0, 24);
         } else {
             shortRolls = rolls;
         }
@@ -66,18 +66,27 @@ public class BowlingGame {
             cleanFrames = frames;
         } else {
             BowlingFrame finalFrame = frames[9];
+            if (finalFrame.isASpare()) {
+                cleanFrames = finalFrameSpareCleanup(frames);
+            } else if (finalFrame.isAStrike()) {
+                cleanFrames = finalFrameStrikeCleanup(frames);
+            } else {
+                cleanFrames = finalFrameRegularCleanup(frames);
+            }
+            /*BowlingFrame finalFrame = frames[9];
             if (numberOfFrames == 10) {
                 if (finalFrame.isRegular()) {
                     cleanFrames = frames;
                 } else {
                     // The final frame is a spare or strike, but there are no bonus rolls.
-                    // Fill the bonus frame with (0, 0).
-                    cleanFrames = new BowlingFrame[11];
+                    // Fill the bonus frame(s) with (0, 0).
+                    cleanFrames = new BowlingFrame[12];
                     BowlingFrame bonusFrame = new BowlingFrame();
                     bonusFrame.setFrame(0, 0);
                     cleanFrames[10] = bonusFrame;
+                    cleanFrames[11] = bonusFrame;
                 }
-            } else {
+            } else if (numberOfFrames == 11) {
                 BowlingFrame bonusFrame = frames[10];
                 if (finalFrame.isASpare()) {
                     if (bonusFrame.getRollTwo() == 0) {
@@ -92,14 +101,77 @@ public class BowlingGame {
                         cleanFrames[10] = cleanBonusFrame;
                     }
                 } else if (finalFrame.isAStrike()) {
+                    // The final frame is a strike. But there is only one bonus roll.
                     cleanFrames = frames;
                 } else {
                     // The final frame is regular, but there are extra rolls. Remove them.
                     cleanFrames = new BowlingFrame[10];
                     System.arraycopy(frames, 0, cleanFrames, 0, 10);
                 }
+            } else {
+                // The final frame is a strike. There are two bonus rolls.
             }
+            */
         }
+        return cleanFrames;
+    }
+
+    private BowlingFrame[] finalFrameSpareCleanup(BowlingFrame[] frames) {
+        BowlingFrame[] cleanFrames;
+        int numberOfFrames = frames.length;
+        if (numberOfFrames == 10) {
+            // The final frame is a spare. But there are no bonus rolls.
+            // Fill the bonus frame with (0, 0).
+            cleanFrames = new BowlingFrame[11];
+            BowlingFrame bonusFrame = new BowlingFrame();
+            bonusFrame.setFrame(0, 0);
+            cleanFrames[10] = bonusFrame;
+        } else {
+            // There is a bonus roll. Maybe even two.
+            BowlingFrame bonusFrame = frames[10];
+            cleanFrames = new BowlingFrame[11];
+            System.arraycopy(frames, 0, cleanFrames, 0, 10);
+            int bonusRoll = bonusFrame.getRollOne();
+            BowlingFrame cleanBonusFrame = new BowlingFrame();
+            cleanBonusFrame.setFrame(bonusRoll, 0);
+            cleanFrames[10] = cleanBonusFrame;
+        }
+        return cleanFrames;
+    }
+
+    private BowlingFrame[] finalFrameStrikeCleanup(BowlingFrame[] frames) {
+        BowlingFrame[] cleanFrames;
+        int numberOfFrames = frames.length;
+        if (numberOfFrames == 10) {
+            // The final frame is a strike. But there are no bonus rolls.
+            // Fill the bonus frame(s) with (0, 0).
+            cleanFrames = new BowlingFrame[12];
+            BowlingFrame bonusFrame = new BowlingFrame();
+            bonusFrame.setFrame(0, 0);
+            cleanFrames[10] = bonusFrame;
+            cleanFrames[11] = bonusFrame;
+        } else if (numberOfFrames == 11) {
+            BowlingFrame bonusFrame = frames[10];
+            // The final frame is a strike. But there is only one bonus roll.
+            cleanFrames = frames;
+        } else {
+            // The final frame is a strike. There are two bonus rolls.
+            cleanFrames = frames;
+        }
+        return cleanFrames;
+    }
+
+    private BowlingFrame[] finalFrameRegularCleanup(BowlingFrame[] frames) {
+        BowlingFrame[] cleanFrames;
+        int numberOfFrames = frames.length;
+        if (numberOfFrames == 10) {
+            cleanFrames = frames;
+        } else {
+            // The final frame is regular. But there are extra rolls. Remove them.
+            BowlingFrame bonusFrame = frames[10];
+            cleanFrames = new BowlingFrame[10];
+            System.arraycopy(frames, 0, cleanFrames, 0, 10);
+            }
         return cleanFrames;
     }
 
