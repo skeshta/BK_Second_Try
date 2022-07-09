@@ -7,40 +7,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BowlingGameTest {
     private BowlingGame game;
-    private BowlingFrame frame;
     private final int error_value = -2147483648;
 
     @BeforeEach
     void setUp() {
         game = new BowlingGame();
-        frame = new BowlingFrame();
     }
 
     @AfterEach
     void tearDown() {
         game = null;
-        frame = null;
-    }
-
-    @Test
-    @DisplayName("A frame with 1 and 7 has score 8")
-    void TestSingleFrameNoStrikeNoSpare() {
-        frame.setFrame(1, 7);
-        assertEquals(8, frame.frameSum());
-    }
-
-    @Test
-    @DisplayName("Both rolls must be <= 10")
-    void TestNumbersTooHigh() {
-        frame.setFrame(4, 9);
-        assertEquals(error_value , frame.frameSum());
-    }
-
-    @Test
-    @DisplayName("Both rolls must be >= 0")
-    void TestNumbersTooLow() {
-        frame.setFrame(-4, 9);
-        assertEquals(error_value , frame.frameSum());
     }
 
     @Test

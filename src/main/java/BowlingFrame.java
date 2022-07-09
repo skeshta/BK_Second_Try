@@ -35,6 +35,12 @@ public class BowlingFrame {
         return spare;
     }
 
+    public boolean isRegular() {
+        boolean regular;
+        regular = !(isAStrike() || isASpare());
+        return regular;
+    }
+
     public int frameSum() {
         int score;
         if (!frameValid()) {
