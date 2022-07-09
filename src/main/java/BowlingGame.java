@@ -1,88 +1,84 @@
 public class BowlingGame {
+    private BowlingFrame[] frames;
+    private int numberOfFrames;
     private final int error_value = -2147483648;
 
-    private boolean frameValid(int rollOne, int rollTwo) {
-        boolean bothRollsOK;
-        bothRollsOK = rollOne + rollTwo <= 10 && Math.min(rollOne, rollTwo) >= 0;
-        return bothRollsOK;
+    public int getScore(int[] rolls) {
+        setGame(rolls);
+        return score();
     }
 
-    private boolean gameValid(int[] frames) {
+    public void setGame(int[] rolls) {
+        int numberOfRolls = rolls.length;
+        if (numberOfRolls % 2 != 0) {
+            // If the last genuine frame is a spare, there may be one extra roll.
+            // In that case, just add a 0 to that "frame."
+            int[] cleanFrameRolls = new int[numberOfRolls + 1];
+            System.arraycopy(rolls, 0, cleanFrameRolls, 0, numberOfRolls);
+            cleanFrameRolls[numberOfRolls + 1] = 0;
+            numberOfRolls++;
+            rolls = cleanFrameRolls;
+        }
+
+        // Convert the scores into proper frames.
+        numberOfFrames = numberOfRolls / 2;
+        frames = new BowlingFrame[numberOfFrames + 1];
+        BowlingFrame currentFrame;
+        int rollIndex;
+        for (int frameIndex = 0; frameIndex < numberOfFrames; frameIndex++) {
+            rollIndex = frameIndex * 2;
+            currentFrame = new BowlingFrame();
+            currentFrame.setFrame(rolls[rollIndex], rolls[rollIndex + 1]);
+            frames[frameIndex] = currentFrame;
+        }
+    }
+
+    private boolean gameValid() {
         boolean allFramesOK;
-        int totalRolls = frames.length;
-        allFramesOK = totalRolls % 2 == 0;
-        if (totalRolls > 22) {
-            allFramesOK = false;
-        } else if (totalRolls == 22) {
-            int lastFrameRollOne = frames[18];
-            int lastFrameRollTwo = frames[19];
-            if (frameIsASpare(lastFrameRollOne, lastFrameRollTwo)) {
-                int bonusFrameRollTwo = frames[21];
+        int numberOfFrames = frames.length;
+        allFramesOK = numberOfFrames <= 10;
+        if (numberOfFrames == 11) {
+            BowlingFrame lastGenuineFrame = frames[9];
+            if (lastGenuineFrame.isASpare()) {
+                int bonusFrameRollTwo = frames[10].getRollTwo();
                 allFramesOK = (bonusFrameRollTwo == 0);
             }
         }
         return allFramesOK;
     }
 
-    private boolean frameIsAStrike(int rollOne, int rollTwo) {
-        boolean isStrike;
-        isStrike = (rollOne == 10 && rollTwo == 0);
-        return isStrike;
-    }
-
-    private boolean frameIsASpare(int rollOne, int rollTwo) {
-        boolean isSpare;
-        isSpare = scoreSingleFrame(rollOne, rollTwo) == 10 && rollOne != 10;
-        return isSpare;
-    }
-
-    public int scoreGameTotal(int[] frames) {
+    public int score() {
         int gameScore = 0;
 
-        if (!gameValid(frames)) {
+        if (!gameValid()) {
             return error_value;
         } else {
-            int totalRolls = Math.min(frames.length, 20);
+            int numberOfGenuineFrames = Math.min(numberOfFrames, 10);
             int scoreCurrentFrame;
             int scoreNextFrame;
-            int currentRollOne;
-            int currentRollTwo;
-            int nextRollOne;
-            int nextRollTwo;
-            for (int currentRoll = 0; currentRoll < totalRolls; currentRoll += 2) {
-                currentRollOne = frames[currentRoll];
-                currentRollTwo = frames[currentRoll + 1];
-                scoreCurrentFrame = scoreSingleFrame(currentRollOne, currentRollTwo);
-
-                if (frameIsAStrike(currentRollOne, currentRollTwo)) {
-                    nextRollOne = frames[currentRoll + 2];
-                    nextRollTwo = frames[currentRoll + 3];
-                    scoreNextFrame = scoreSingleFrame(nextRollOne, nextRollTwo);
-                    if (currentRoll != 18) {
+            BowlingFrame currentFrame;
+            BowlingFrame nextFrame;
+            nextFrame = new BowlingFrame();
+            for (int frameIndex = 0; frameIndex < numberOfGenuineFrames; frameIndex ++) {
+                currentFrame = frames[frameIndex];
+                scoreCurrentFrame = currentFrame.frameSum();
+                if (currentFrame.isAStrike()) {
+                    nextFrame = frames[frameIndex +1];
+                    scoreNextFrame = nextFrame.frameSum();
+                    if (frameIndex != 9) {
                         scoreCurrentFrame += scoreNextFrame;
-                        if (nextRollOne == 10) {
-                            scoreCurrentFrame += frames[currentRoll + 4];
+                        if (nextFrame.isAStrike()) {
+                            scoreCurrentFrame += frames[frameIndex + 2].getRollOne();
                         }
                     } else {
-                        scoreCurrentFrame += (frames[currentRoll + 2] + frames[currentRoll + 3]);
+                        scoreCurrentFrame += nextFrame.frameSum();
                     }
-                } else if (frameIsASpare(currentRollOne, currentRollTwo)) {
-                    scoreCurrentFrame += frames[currentRoll + 2];
+                } else if (currentFrame.isASpare()) {
+                    scoreCurrentFrame += nextFrame.getRollTwo();
                 }
                 gameScore += scoreCurrentFrame;
             }
             return gameScore;
-        }
-    }
-
-    public int scoreSingleFrame(int rollOne, int rollTwo) {
-        int frameScore;
-        if (!frameValid(rollOne, rollTwo)) {
-            return error_value;
-        }
-        else {
-            frameScore = rollOne + rollTwo;
-            return frameScore;
         }
     }
 
