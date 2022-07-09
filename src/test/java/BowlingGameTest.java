@@ -106,11 +106,40 @@ class BowlingGameTest {
         assertEquals(41, game.scoreGameTotal(twoStrikes));
     }
 
+    /*
     @Test
     @DisplayName("All strikes sums to 300")
     void TestAllStrikes() {
         int[] allStrikes = {10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 0, 10, 10};
         assertEquals(300, game.scoreGameTotal(allStrikes));
     }
+    */
+
+    /*
+    I am looking at this project again the next morning. Lessons learned:
+        - Strikes have been broken for a while.
+          I've been adding only the score of the very next frame, not of the next two frames.
+            > Read the kata more closely, and more often.
+        - I did not catch the broken strikes for a while.
+            > Put more thought into the tests.
+              Specifically, consider what test to write next, and why.
+        - The code itself is not pretty (as far as I can tell).
+            > Do more refactoring (assuming have actually been doing "refactoring").
+        - I have ideas on how to improve the code.
+          But that would go against the "Red, Green, Refactor" - or would it?
+          I am not sure how much code rewriting is too much.
+          After all, if I'm rewriting code and nothing breaks, I am still in the "refactoring" phase.
+          Unless there is another constraint (e.g. minimal changes).
+          (Of course, this assumes that the tests stay green).
+            > Apply those ideas to the tests rather than the code itself.
+              Take those Baby Steps, but have a direction in mind.
+
+    I suppose ultimately the tests are there for two reasons.
+        (1) Ensure the code runs properly, of course.
+        (2) Keep you writing code, instead of overthinking the problem.
+        (3) Ensure that new code (the Baby Steps) takes you in a useful direction.
+
+    I am tempted to start over, but salvaging this might be instructive and/or fun.
+     */
 
 }
