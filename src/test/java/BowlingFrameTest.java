@@ -22,6 +22,6 @@ class BowlingFrameTest {
     @DisplayName("Rolls sum correctly")
     void rollsSumCorrectly() {
         frame.set(1, 4);
-        assertEquals(5, frame.sum());
+        assertEquals(5, frame.sumRolls());
     }
 }
