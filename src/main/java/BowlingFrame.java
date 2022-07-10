@@ -46,4 +46,10 @@ public class BowlingFrame {
         isSpareOrNot = (sumRolls() == 10 && rollOne != 10);
         return isSpareOrNot;
     }
+
+    public boolean isStrike() {
+        boolean isSptrikeOrNot;
+        isSptrikeOrNot = (rollOne == 10 && rollTwo == 0);
+        return isSptrikeOrNot;
+    }
 }

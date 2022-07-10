@@ -23,9 +23,9 @@ public class BowlingGame {
             BowlingFrame nextFrame = frames[index + 1];
             if (currentFrame.isSpare()) {
                 bonus = nextFrame.getRollOne();
-            } //else if (currentFrame.isStrike()) {
-                //bonus = nextFrame.sumRolls();
-            //}
+            } else if (currentFrame.isStrike()) {
+                bonus = nextFrame.sumRolls();
+            }
         }
         return bonus;
     }
