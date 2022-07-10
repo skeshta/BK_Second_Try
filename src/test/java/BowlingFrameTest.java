@@ -20,9 +20,16 @@ class BowlingFrameTest {
 
     @Test
     @DisplayName("Rolls sum correctly")
-    void TestRollsSumCorrectly() {
+    void TestSumRolls() {
         frame.set(1, 4);
         assertEquals(5, frame.sumRolls());
+    }
+
+    @Test
+    @DisplayName("Extract roll 1 correctly")
+    void TestExtractRollOne() {
+        frame.set(7, 0);
+        assertEquals(7, frame.getRollOne());
     }
 
     @Test
