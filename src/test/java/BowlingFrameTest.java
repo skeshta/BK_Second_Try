@@ -35,7 +35,8 @@ class BowlingFrameTest {
     @Test
     @DisplayName("Bonus rolls default to 0")
     void TestBonusRollRegular() {
-
+        frame.set(2, 3);
+        assertEquals(0, frame.getBonusRoll());
     }
 
     @Test

@@ -38,11 +38,7 @@ public class BowlingFrame {
     }
 
     public int getBonusRoll() {
-        int bonus = 0;
-        if (isSpare()) {
-            bonus = bonusRollOne;
-        }
-        return bonus;
+        return bonusRollOne + bonusRollTwo;
     }
 
     public boolean isSpare() {
