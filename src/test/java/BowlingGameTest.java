@@ -68,4 +68,18 @@ class BowlingGameTest {
         frames[1] = regularFrame;
         assertEquals(20, game.getScore(frames));
     }
+
+    @Test
+    @DisplayName("Sum ten strikes with perfect bonus rolls")
+    void TestSum10Strikes() {
+        int rollOne = 10;
+        int rollTwo = 0;
+        BowlingFrame[] frames = new BowlingFrame[10];
+        BowlingFrame regularFrame = new BowlingFrame();
+        regularFrame.set(rollOne, rollTwo);
+        for (int count = 0; count < 10; count++) {
+            frames[count] = regularFrame;
+        }
+        assertEquals(300, game.getScore(frames));
+    }
 }
