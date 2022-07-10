@@ -20,8 +20,18 @@ class BowlingFrameTest {
 
     @Test
     @DisplayName("Rolls sum correctly")
-    void rollsSumCorrectly() {
+    void TestRollsSumCorrectly() {
         frame.set(1, 4);
         assertEquals(5, frame.sumRolls());
     }
+
+    @Test
+    @DisplayName("All spares are identified correctly")
+    void TestIsSpare() {
+        for (int count = 0; count < 10; count++) {
+            frame.set(count, 10 - count);
+            assertEquals(true, frame.isSpare());
+        }
+    }
+
 }

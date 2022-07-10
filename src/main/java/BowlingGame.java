@@ -7,6 +7,7 @@ public class BowlingGame {
         numberOfFrames = frames.length;
         for (int count = 0; count < numberOfFrames; count++) {
             currentScore = frames[count].sumRolls();
+            //currentScore += bonusScore;
             score += currentScore;
         }
         return score;

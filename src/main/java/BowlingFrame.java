@@ -17,4 +17,10 @@ public class BowlingFrame {
         int sum = rollOne + rollTwo;
         return sum;
     }
+
+    public boolean isSpare() {
+        boolean isSpareOrNot;
+        isSpareOrNot = (sumRolls() == 10 && rollOne != 10);
+        return isSpareOrNot;
+    }
 }
