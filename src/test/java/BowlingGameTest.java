@@ -59,6 +59,8 @@ class BowlingGameTest {
         BowlingFrame regularFrame = new BowlingFrame();
         spare.set(1, 9);
         regularFrame.set(2, 3);
+        frames[0] = spare;
+        frames[1] = regularFrame;
         assertEquals(17, game.getScore(frames));
     }
 }
