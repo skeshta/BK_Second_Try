@@ -5,22 +5,23 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class BowlingGameTest {
-    private BowlingGame game;
+class BowlingFrameTest {
+    private BowlingFrame frame;
 
     @BeforeEach
     void setUp() {
-        game = new BowlingGame();
+        frame = new BowlingFrame();
     }
 
     @AfterEach
     void tearDown() {
-        game = null;
+        frame = null;
     }
 
     @Test
-    @DisplayName("Initial score is 0")
-    void TestInitialScore() {
-        assertEquals(0, game.getScore());
+    @DisplayName("Rolls sum correctly")
+    void rollsSumCorrectly() {
+        frame.set(1, 4);
+        assertEquals(5, frame.sum());
     }
 }
