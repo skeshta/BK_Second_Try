@@ -32,6 +32,10 @@ class BowlingFrameTest {
         assertEquals(7, frame.getRollOne());
     }
 
+    /*
+    Naming needs work. The frame does not know whether it is the final frame.
+    And in theory, any frame could receive a bonus roll.
+    */
     @Test
     @DisplayName("Bonus rolls default to 0")
     void TestBonusRollRegular() {
@@ -54,12 +58,28 @@ class BowlingFrameTest {
     }
 
     @Test
-    @DisplayName("All spares are identified")
+    @DisplayName("Identify all spares")
     void TestIsSpare() {
         for (int count = 0; count < 10; count++) {
             frame.set(count, 10 - count);
             assertEquals(true, frame.isSpare());
         }
+    }
+
+    @Test
+    @DisplayName("Identify only spares")
+    void TestIsNotSpare() {
+        frame.set(10, 0);
+        assertEquals(false, frame.isSpare());
+        frame.set(2, 3);
+        assertEquals(false, frame.isSpare());
+    }
+
+    @Test
+    @DisplayName("Identify a strike")
+    void TestIsStrike() {
+        frame.set(10, 0);
+        assertEquals(true, frame.isStrike());
     }
 
 }

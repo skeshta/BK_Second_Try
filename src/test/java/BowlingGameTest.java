@@ -18,14 +18,6 @@ class BowlingGameTest {
         game = null;
     }
 
-    /*
-    @Test
-    @DisplayName("Initial score is 0")
-    void TestInitialScore() {
-        assertEquals(0, game.getScore());
-    }
-    */
-
     @Test
     @DisplayName("Sum two regular frames")
     void TestSum2RegularFrames() {
@@ -53,7 +45,7 @@ class BowlingGameTest {
 
     @Test
     @DisplayName("Sum a spare and a regular frame")
-    void TestSpareSumsCorrectly () {
+    void TestSparePlusRegular () {
         BowlingFrame[] frames = new BowlingFrame[2];
         BowlingFrame spare = new BowlingFrame();
         BowlingFrame regularFrame = new BowlingFrame();
@@ -62,5 +54,18 @@ class BowlingGameTest {
         frames[0] = spare;
         frames[1] = regularFrame;
         assertEquals(17, game.getScore(frames));
+    }
+
+    @Test
+    @DisplayName("Sum a strike and a regular frame")
+    void TestStrikePlusRegular() {
+        BowlingFrame[] frames = new BowlingFrame[2];
+        BowlingFrame strike = new BowlingFrame();
+        BowlingFrame regularFrame = new BowlingFrame();
+        strike.set(10, 0);
+        regularFrame.set(2, 3);
+        frames[0] = strike;
+        frames[1] = regularFrame;
+        assertEquals(20, game.getScore(frames));
     }
 }
