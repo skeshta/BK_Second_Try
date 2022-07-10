@@ -27,7 +27,7 @@ class BowlingGameTest {
     */
 
     @Test
-    @DisplayName("Two regular frames sum correctly")
+    @DisplayName("Sum two regular frames")
     void TestSum2RegularFrames() {
         BowlingFrame[] frames = new BowlingFrame[2];
         frames[0] = new BowlingFrame();
@@ -38,7 +38,7 @@ class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("Ten regular frames sum correctly")
+    @DisplayName("Sum ten regular frames")
     void TestSum10RegularFrames () {
         int rollOne = 2;
         int rollTwo = 3;
@@ -52,7 +52,7 @@ class BowlingGameTest {
     }
 
     @Test
-    @DisplayName("Spare sums correctly")
+    @DisplayName("Sum a spare and a regular frame")
     void TestSpareSumsCorrectly () {
         BowlingFrame[] frames = new BowlingFrame[2];
         BowlingFrame spare = new BowlingFrame();
