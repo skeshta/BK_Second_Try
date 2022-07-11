@@ -41,6 +41,10 @@ public class BowlingFrame {
         return bonusRollOne + bonusRollTwo;
     }
 
+    public int getBonusRollOne() {
+        return bonusRollOne;
+    }
+
     public boolean isSpare() {
         boolean isSpareOrNot;
         isSpareOrNot = (sumRolls() == 10 && rollOne != 10);
@@ -48,8 +52,9 @@ public class BowlingFrame {
     }
 
     public boolean isStrike() {
-        boolean isSptrikeOrNot;
-        isSptrikeOrNot = (rollOne == 10 && rollTwo == 0);
-        return isSptrikeOrNot;
+        boolean isStrikeOrNot;
+        // "rollTwo == 0" is unnecessary if we assume good input.
+        isStrikeOrNot = (rollOne == 10 && rollTwo == 0);
+        return isStrikeOrNot;
     }
 }

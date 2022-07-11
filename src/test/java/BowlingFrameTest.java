@@ -27,32 +27,35 @@ class BowlingFrameTest {
 
     @Test
     @DisplayName("Extract roll 1")
-    void TestRollOne() {
+    void TestGetRollOne() {
         frame.set(7, 0);
         assertEquals(7, frame.getRollOne());
     }
 
-    /*
-    Naming needs work. The frame does not know whether it is the final frame.
-    And in theory, any frame could receive a bonus roll.
-    */
+    @Test
+    @DisplayName("Extract bonus roll 1")
+    void TestGetBonusRollOne() {
+        frame.set(10, 0, 4);
+        assertEquals(4, frame.getBonusRollOne());
+    }
+
     @Test
     @DisplayName("Bonus rolls default to 0")
-    void TestBonusRollRegular() {
+    void Test0BonusRolls() {
         frame.set(2, 3);
         assertEquals(0, frame.getBonusRoll());
     }
 
     @Test
-    @DisplayName("Spare final frame has 1 bonus roll")
-    void TestBonusRollSpare() {
+    @DisplayName("Can set one bonus roll")
+    void Test1BonusRoll() {
         frame.set(1, 9, 5);
         assertEquals(5, frame.getBonusRoll());
     }
 
     @Test
-    @DisplayName("Strike final frame has 2 bonus rolls")
-    void TestBonusRollStrike() {
+    @DisplayName("Can set two bonus rolls")
+    void Test2BonusRolls() {
         frame.set(10, 0, 2, 3);
         assertEquals(5, frame.getBonusRoll());
     }

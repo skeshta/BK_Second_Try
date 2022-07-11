@@ -77,9 +77,16 @@ class BowlingGameTest {
         BowlingFrame[] frames = new BowlingFrame[10];
         BowlingFrame regularFrame = new BowlingFrame();
         regularFrame.set(rollOne, rollTwo);
-        for (int count = 0; count < 10; count++) {
+        for (int count = 0; count < 9; count++) {
             frames[count] = regularFrame;
         }
+        regularFrame.set(rollOne, rollTwo, 10, 10);
+        frames[9] = regularFrame;
         assertEquals(300, game.getScore(frames));
     }
+
+    /*
+    void TestSpareInAnyPlace() {
+    }
+    */
 }
