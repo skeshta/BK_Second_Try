@@ -18,6 +18,11 @@ class BowlingGameTest {
         game = null;
     }
 
+    /*
+    This test, to sum 2 regular frames, seems redundant since
+        (1) we only want to score a complete game.
+        (2) We have a test that sums 10 regular frames.
+    */
     @Test
     @DisplayName("Two regular frames")
     void TestSum2RegularFrames() {
@@ -43,6 +48,27 @@ class BowlingGameTest {
         assertEquals(50, game.getScore(frames));
     }
 
+    /*
+    This test, to sum 10 frames with 0 points each, seems very obvious.
+    But I maybe it should stay as an edge case.
+    */
+    @Test
+    @DisplayName("Ten frames with 0 points each")
+    void Test10ZeroFrames() {
+        BowlingFrame[] frames = new BowlingFrame[10];
+        BowlingFrame regularFrame = new BowlingFrame();
+        regularFrame.set(0, 0);
+        for (int index = 0; index < 10; index++) {
+            frames[index] = regularFrame;
+        }
+        assertEquals(0, game.getScore(frames));
+    }
+
+    /*
+    As above, this test sums only 2 frames.
+    Probably we should add a test with 10 frames and 1 spare.
+    Analogously for the strikes.
+    */
     @Test
     @DisplayName("A spare and a regular frame")
     void TestSparePlusRegular () {

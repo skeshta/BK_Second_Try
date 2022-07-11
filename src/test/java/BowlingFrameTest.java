@@ -70,11 +70,16 @@ class BowlingFrameTest {
     }
 
     @Test
-    @DisplayName("Identify only spares")
-    void TestIsNotSpare() {
-        frame.set(10, 0);
-        assertFalse(frame.isSpare());
+    @DisplayName("Regular frames are not spares")
+    void TestRegularIsNotSpare() {
         frame.set(2, 3);
+        assertFalse(frame.isSpare());
+    }
+
+    @Test
+    @DisplayName("Strikes are not spares")
+    void TestStrikeIsNotSpare() {
+        frame.set(10, 0);
         assertFalse(frame.isSpare());
     }
 
