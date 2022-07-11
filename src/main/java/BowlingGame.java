@@ -44,8 +44,9 @@ public class BowlingGame {
         } else if (currentFrame.isStrike()) {
             bonus = nextFrame.sumRolls();
             if (nextFrame.isStrike()) {
-                if (index < finalFrameIndex - 2) {
-                    bonus += frames[index + 2].getRollOne();
+                if (index + 2 < finalFrameIndex) {
+                    BowlingFrame frameAfterNext = frames[index + 2];
+                    bonus += frameAfterNext.getRollOne();
                 } else {
                     bonus += nextFrame.getExtraRollOne();
                 }
@@ -58,6 +59,7 @@ public class BowlingGame {
         int bonus = 0;
         BowlingFrame currentFrame = frames[finalFrameIndex];
         if (currentFrame.isSpare() || currentFrame.isStrike()) {
+            // This works because we're assuming good inputs.
             bonus = currentFrame.getBonusRoll();
         }
         return bonus;
