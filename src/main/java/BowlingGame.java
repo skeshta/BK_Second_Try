@@ -8,9 +8,9 @@ public class BowlingGame {
         frames = framesIn;
         finalFrameIndex = frames.length - 1;
         BowlingFrame currentFrame;
-        for (int count = 0; count <= finalFrameIndex; count++) {
-            currentFrame = frames[count];
-            currentScore = currentFrame.sumRolls() + bonusScore(count);
+        for (int index = 0; index <= finalFrameIndex; index++) {
+            currentFrame = frames[index];
+            currentScore = currentFrame.sumRolls() + bonusScore(index);
             score += currentScore;
         }
         return score;
