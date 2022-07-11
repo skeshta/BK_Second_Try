@@ -7,25 +7,25 @@ public class BowlingFrame {
      */
     private int rollOne;
     private int rollTwo;
-    private int bonusRollOne = 0;
-    private int bonusRollTwo = 0;
+    private int extraRollOne = 0;
+    private int extraRollTwo = 0;
 
     public void set(int firstRoll, int secondRoll) {
         rollOne = firstRoll;
         rollTwo = secondRoll;
     }
 
-    public void set(int firstRoll, int secondRoll, int firstBonusRoll) {
+    public void set(int firstRoll, int secondRoll, int firstExtraRoll) {
         rollOne = firstRoll;
         rollTwo = secondRoll;
-        bonusRollOne = firstBonusRoll;
+        extraRollOne = firstExtraRoll;
     }
 
-    public void set(int firstRoll, int secondRoll, int firstBonusRoll, int secondBonusRoll) {
+    public void set(int firstRoll, int secondRoll, int firstExtraRoll, int secondExtraRoll) {
         rollOne = firstRoll;
         rollTwo = secondRoll;
-        bonusRollOne = firstBonusRoll;
-        bonusRollTwo = secondBonusRoll;
+        extraRollOne = firstExtraRoll;
+        extraRollTwo = secondExtraRoll;
     }
 
     public int sumRolls() {
@@ -38,11 +38,11 @@ public class BowlingFrame {
     }
 
     public int getBonusRoll() {
-        return bonusRollOne + bonusRollTwo;
+        return extraRollOne + extraRollTwo;
     }
 
-    public int getBonusRollOne() {
-        return bonusRollOne;
+    public int getExtraRollOne() {
+        return extraRollOne;
     }
 
     public boolean isSpare() {

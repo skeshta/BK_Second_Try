@@ -3,7 +3,7 @@ public class BowlingGame {
     private int finalFrameIndex;
 
     public int getScore(BowlingFrame[] framesIn) {
-        int score = 0;
+        int totalScore = 0;
         int currentScore;
         frames = framesIn;
         finalFrameIndex = frames.length - 1;
@@ -11,9 +11,17 @@ public class BowlingGame {
         for (int index = 0; index <= finalFrameIndex; index++) {
             currentFrame = frames[index];
             currentScore = currentFrame.sumRolls() + bonusScore(index);
-            score += currentScore;
+            totalScore += currentScore;
+            /*
+            Fun fact:
+            "currentFrame.sumRolls() + bonusScore(index)" makes it look like bonusScore should be method of the *frame* rather than the game.
+            But the frame only records what we rolled.
+            The *game* is what tells us how to calculate our score, based on those rolls.
+
+            Although that is probably obvious to you.
+            */
         }
-        return score;
+        return totalScore;
     }
 
     private int bonusScore(int index) {
@@ -38,7 +46,7 @@ public class BowlingGame {
                 if (index < finalFrameIndex - 2) {
                     bonus += frames[index + 2].getRollOne();
                 } else {
-                    bonus += nextFrame.getBonusRollOne();
+                    bonus += nextFrame.getExtraRollOne();
                 }
             }
         }

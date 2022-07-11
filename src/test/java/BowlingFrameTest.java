@@ -36,7 +36,7 @@ class BowlingFrameTest {
     @DisplayName("Extract bonus roll 1")
     void TestGetBonusRollOne() {
         frame.set(10, 0, 4);
-        assertEquals(4, frame.getBonusRollOne());
+        assertEquals(4, frame.getExtraRollOne());
     }
 
     @Test
@@ -65,7 +65,7 @@ class BowlingFrameTest {
     void TestIsSpare() {
         for (int count = 0; count < 10; count++) {
             frame.set(count, 10 - count);
-            assertEquals(true, frame.isSpare());
+            assertTrue(frame.isSpare());
         }
     }
 
@@ -73,16 +73,16 @@ class BowlingFrameTest {
     @DisplayName("Identify only spares")
     void TestIsNotSpare() {
         frame.set(10, 0);
-        assertEquals(false, frame.isSpare());
+        assertFalse(frame.isSpare());
         frame.set(2, 3);
-        assertEquals(false, frame.isSpare());
+        assertFalse(frame.isSpare());
     }
 
     @Test
     @DisplayName("Identify a strike")
     void TestIsStrike() {
         frame.set(10, 0);
-        assertEquals(true, frame.isStrike());
+        assertTrue(frame.isStrike());
     }
 
 }
