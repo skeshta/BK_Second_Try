@@ -14,9 +14,10 @@ public class BowlingGame {
             totalScore += currentScore;
             /*
             Fun fact:
-            "currentFrame.sumRolls() + bonusScore(index)" makes it look like bonusScore should be method of the *frame* rather than the game.
-            But the frame only records what we rolled.
-            The *game* is what tells us how to calculate our score, based on those rolls.
+            "currentFrame.sumRolls() + bonusScore(index)" makes it look
+                    like bonusScore should be a method of the *frame* rather than the game.
+            But the frame only records what we rolled. The frame knows the rolls, not the rules.
+            The game is what tells us how to calculate our score. The game knows both rolls and rules.
 
             Although that is probably obvious to you.
             */
@@ -56,9 +57,7 @@ public class BowlingGame {
     private int bonusScoreFinal() {
         int bonus = 0;
         BowlingFrame currentFrame = frames[finalFrameIndex];
-        if (currentFrame.isSpare()) {
-            bonus = currentFrame.getBonusRoll();
-        } else if (currentFrame.isStrike()) {
+        if (currentFrame.isSpare() || currentFrame.isStrike()) {
             bonus = currentFrame.getBonusRoll();
         }
         return bonus;
