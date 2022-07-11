@@ -1,14 +1,14 @@
 public class BowlingGame {
     private BowlingFrame[] frames;
-    private int numberOfFrames;
+    private int finalFrameIndex;
 
     public int getScore(BowlingFrame[] framesIn) {
         int score = 0;
         int currentScore;
         frames = framesIn;
-        numberOfFrames = frames.length;
+        finalFrameIndex = frames.length - 1;
         BowlingFrame currentFrame;
-        for (int count = 0; count < numberOfFrames; count++) {
+        for (int count = 0; count <= finalFrameIndex; count++) {
             currentFrame = frames[count];
             currentScore = currentFrame.sumRolls() + bonusScore(count);
             score += currentScore;
@@ -18,10 +18,10 @@ public class BowlingGame {
 
     private int bonusScore(int index) {
         int bonus;
-        if (index < numberOfFrames - 1) {
+        if (index < finalFrameIndex) {
             bonus = bonusScoreOngoing(index);
         } else {
-            bonus = bonusScoreFinal(index);
+            bonus = bonusScoreFinal();
         }
         return bonus;
     }
@@ -35,7 +35,7 @@ public class BowlingGame {
         } else if (currentFrame.isStrike()) {
             bonus = nextFrame.sumRolls();
             if (nextFrame.isStrike()) {
-                if (index < numberOfFrames - 3) {
+                if (index < finalFrameIndex - 2) {
                     bonus += frames[index + 2].getRollOne();
                 } else {
                     bonus += nextFrame.getBonusRollOne();
@@ -45,9 +45,9 @@ public class BowlingGame {
         return bonus;
     }
 
-    private int bonusScoreFinal(int index) {
+    private int bonusScoreFinal() {
         int bonus = 0;
-        BowlingFrame currentFrame = frames[index];
+        BowlingFrame currentFrame = frames[finalFrameIndex];
         if (currentFrame.isSpare()) {
             bonus = currentFrame.getBonusRoll();
         } else if (currentFrame.isStrike()) {
