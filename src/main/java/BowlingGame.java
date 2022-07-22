@@ -17,21 +17,81 @@ public class BowlingGame {
     }
 
     public BowlingFrame[] stringToFrames(String rolls) {
+        /*
+        For simplicity, let's assume good inputs.
+        */
         BowlingFrame[] framesOut = new BowlingFrame[10];
-        for (int index = 0; index < 10; index++) {
-            framesOut[index] = new BowlingFrame();
-        }
         BowlingFrame currentFrame;
-        for (int index = 0; index < 6; index++) {
-            currentFrame = framesOut[index];
-            currentFrame.set(index, index);
+        int stringIndexCurrentFrame = 0;
+        int stringIndexNextFrame;
+        char currentChar;
+        char nextChar;
+        int rollOne = 0;
+        int rollTwo = 0;
+        int extraRollOne;
+        int extraRollTwo;
+        for (int index = 0; index < 9; index++) {
+            currentFrame = new BowlingFrame();
+            currentChar = rolls.charAt(stringIndexCurrentFrame);
+            nextChar = rolls.charAt(stringIndexCurrentFrame + 1);
+            System.out.println("index: " + index);
+            System.out.println("currentChar: " + currentChar);
+            if (currentChar == 'X') {
+                rollOne = 10;
+                currentFrame.set(rollOne, rollTwo);
+                stringIndexNextFrame = 2;
+            } else if (nextChar == '/') {
+                rollOne = Character.getNumericValue(currentChar);
+                rollTwo = 10 - rollOne;
+                currentFrame.set(rollOne, rollTwo);
+                stringIndexNextFrame = 3;
+            } else {
+                if (currentChar != '-') {
+                    rollOne = Character.getNumericValue(currentChar);
+                }
+                if (nextChar != '-') {
+                    rollTwo = Character.getNumericValue(nextChar);
+                }
+                stringIndexNextFrame = 3;
+            }
+            currentFrame.set(rollOne, rollTwo);
+            framesOut[index] = currentFrame;
+            stringIndexCurrentFrame += stringIndexNextFrame;
         }
-        for (int index = 6; index < 9; index++) {
-            currentFrame = framesOut[index];
-            currentFrame.set(index, 10 - index);
+        currentFrame = new BowlingFrame();
+
+        currentChar = rolls.charAt(stringIndexCurrentFrame);
+        System.out.println("currentChar: " + currentChar);
+        nextChar = rolls.charAt(stringIndexCurrentFrame + 1);
+        if (currentChar == 'X') {
+            rollOne = 10;
+            rollTwo = 0;
+            char finalChar;
+            finalChar = rolls.charAt(stringIndexCurrentFrame + 2);
+            extraRollOne = Character.getNumericValue(nextChar);
+            extraRollTwo = Character.getNumericValue(finalChar);
+            System.out.println("rollOne: " + rollOne);
+            System.out.println("rollTwo: " + rollTwo);
+            System.out.println("extraRollOne: " + extraRollOne);
+            System.out.println("extraRollTwo: " + extraRollTwo);
+            currentFrame.set(rollOne, rollTwo, extraRollOne, extraRollTwo);
+        } else if (nextChar == '/') {
+            rollOne = currentChar;
+            rollTwo = 10 - rollOne;
+            extraRollOne = Character.getNumericValue(nextChar);
+            currentFrame.set(rollOne, rollTwo, extraRollOne);
+        } else {
+            rollOne = 0;
+            rollTwo = 0;
+            if (currentChar != '-') {
+                rollOne = Character.getNumericValue(currentChar);
+            }
+            if (nextChar != '-') {
+                rollTwo = Character.getNumericValue(nextChar);
+            }
+            currentFrame.set(rollOne, rollTwo);
         }
-        currentFrame = framesOut[9];
-        currentFrame.set(10, 0, 4, 2);
+        framesOut[9] = currentFrame;
         return framesOut;
     }
 

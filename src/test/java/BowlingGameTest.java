@@ -127,8 +127,8 @@ class BowlingGameTest {
         assertEquals(110, game.getScore(frames));
     }
 
-    @Test
-    @DisplayName("Frame has correct values")
+    //@Test
+    //@DisplayName("Frame has correct values")
     void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realRollSum) {
         int testRollOne;
         int testRollSum;
@@ -138,8 +138,8 @@ class BowlingGameTest {
         assertEquals(realRollSum, testRollSum);
     }
 
-    @Test
-    @DisplayName("Frame has correct values")
+    //@Test
+    //@DisplayName("Frame has correct values")
     void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realRollSum, int realExtraRollOne, int realBonusRoll) {
         int testRollOne;
         int testRollSum;
@@ -156,7 +156,7 @@ class BowlingGameTest {
     @Test
     @DisplayName("Convert string of rolls to frame objects")
     void TestStringToFrames() {
-        String rolls = "-- 11 22 33 44 55 6/ 7/ 8/ 9/ X42";
+        String rolls = "-- 11 22 33 44 55 6/ 7/ 8/ X42";
         BowlingFrame[] convertedRolls = game.stringToFrames(rolls);
         for (int index = 0; index < 6; index++) {
             TestFrameValues(convertedRolls[index], index, index * 2);
@@ -170,7 +170,7 @@ class BowlingGameTest {
     @Test
     @DisplayName("Convert string of rolls to frame objects")
     void TestStringToFramesAllZeroes() {
-        String rolls = "-- -- -- -- -- -- -- -- -- -- --";
+        String rolls = "-- -- -- -- -- -- -- -- -- --";
         BowlingFrame[] convertedRolls = game.stringToFrames(rolls);
         for (int index = 0; index < 10; index++) {
             TestFrameValues(convertedRolls[index], 0, 0);
