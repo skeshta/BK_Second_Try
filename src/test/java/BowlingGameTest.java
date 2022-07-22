@@ -167,4 +167,14 @@ class BowlingGameTest {
         TestFrameValues(convertedRolls[9], 10, 10, 4, 6);
     }
 
+    @Test
+    @DisplayName("Convert string of rolls to frame objects")
+    void TestStringToFramesAllZeroes() {
+        String rolls = "-- -- -- -- -- -- -- -- -- -- --";
+        BowlingFrame[] convertedRolls = game.stringToFrames(rolls);
+        for (int index = 0; index < 10; index++) {
+            TestFrameValues(convertedRolls[index], 0, 0);
+        }
+    }
+
 }
