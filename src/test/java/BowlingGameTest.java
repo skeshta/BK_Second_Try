@@ -26,17 +26,20 @@ class BowlingGameTest {
     @Test
     @DisplayName("Two regular frames")
     void TestSum2RegularFrames() {
+        /*
         BowlingFrame[] frames = new BowlingFrame[2];
         frames[0] = new BowlingFrame();
         frames[1] = new BowlingFrame();
         frames[0].set(2, 5);
         frames[1].set(3, 6);
         assertEquals(16, game.getScore(frames));
+        */
     }
 
     @Test
     @DisplayName("Ten regular frames")
     void TestSum10RegularFrames () {
+        /*
         int rollOne = 2;
         int rollTwo = 3;
         BowlingFrame[] frames = new BowlingFrame[10];
@@ -45,7 +48,9 @@ class BowlingGameTest {
         for (int index = 0; index < 10; index++) {
             frames[index] = regularFrame;
         }
-        assertEquals(50, game.getScore(frames));
+        */
+        String rolls = "23 23 23 23 23 23 23 23 23 23";
+        assertEquals(50, game.getScore(rolls));
     }
 
     /*
@@ -55,13 +60,16 @@ class BowlingGameTest {
     @Test
     @DisplayName("Ten frames with 0 points each")
     void Test10ZeroFrames() {
+        /*
         BowlingFrame[] frames = new BowlingFrame[10];
         BowlingFrame regularFrame = new BowlingFrame();
         regularFrame.set(0, 0);
         for (int index = 0; index < 10; index++) {
             frames[index] = regularFrame;
         }
-        assertEquals(0, game.getScore(frames));
+        */
+        String rolls = "-- -- -- -- -- -- -- -- -- --";
+        assertEquals(0, game.getScore(rolls));
     }
 
     /*
@@ -72,6 +80,7 @@ class BowlingGameTest {
     @Test
     @DisplayName("A spare and a regular frame")
     void TestSparePlusRegular () {
+        /*
         BowlingFrame[] frames = new BowlingFrame[2];
         BowlingFrame spare = new BowlingFrame();
         BowlingFrame regularFrame = new BowlingFrame();
@@ -79,12 +88,15 @@ class BowlingGameTest {
         regularFrame.set(2, 3);
         frames[0] = spare;
         frames[1] = regularFrame;
-        assertEquals(17, game.getScore(frames));
+        */
+        String rolls = "1/ 23 -- -- -- -- -- -- -- --";
+        assertEquals(17, game.getScore(rolls));
     }
 
     @Test
     @DisplayName("A strike and a regular frame")
     void TestStrikePlusRegular() {
+        /*
         BowlingFrame[] frames = new BowlingFrame[2];
         BowlingFrame strike = new BowlingFrame();
         BowlingFrame regularFrame = new BowlingFrame();
@@ -92,12 +104,15 @@ class BowlingGameTest {
         regularFrame.set(2, 3);
         frames[0] = strike;
         frames[1] = regularFrame;
-        assertEquals(20, game.getScore(frames));
+        */
+        String rolls = "X 23 -- -- -- -- -- -- -- --";
+        assertEquals(20, game.getScore(rolls));
     }
 
     @Test
     @DisplayName("Ten strikes with perfect bonus rolls")
     void TestSum10Strikes() {
+        /*
         int rollOne = 10;
         int rollTwo = 0;
         BowlingFrame[] frames = new BowlingFrame[10];
@@ -108,12 +123,15 @@ class BowlingGameTest {
         }
         regularFrame.set(rollOne, rollTwo, 10, 10);
         frames[9] = regularFrame;
-        assertEquals(300, game.getScore(frames));
+        */
+        String rolls = "X X X X X X X X X XXX";
+        assertEquals(300, game.getScore(rolls));
     }
 
     @Test
     @DisplayName("All frames are spares")
     void TestAllFramesAreSpares() {
+        /*
         int rollOne = 1;
         int rollTwo = 9;
         BowlingFrame[] frames = new BowlingFrame[10];
@@ -124,7 +142,9 @@ class BowlingGameTest {
         }
         regularFrame.set(rollOne, rollTwo, 1);
         frames[9] = regularFrame;
-        assertEquals(110, game.getScore(frames));
+        */
+        String rolls = "1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/1";
+        assertEquals(110, game.getScore(rolls));
     }
 
     //@Test
