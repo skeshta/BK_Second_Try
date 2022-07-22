@@ -15,25 +15,31 @@ public class BowlingGame {
         }
         return totalScore;
     }
-    /*
-        Fun fact:
-        "currentFrame.sumRolls() + bonusScore(index)" makes it look
-                like bonusScore should be a method of the *frame* rather than the game.
-        But the frame only records what we rolled. The frame knows the rolls, not the rules.
-        The game is what tells us how to calculate our score. The game knows both rolls and rules.
 
-        P.S.:
-        If the frame does not know the rules (only the rolls), then we could ask:
-        Why can a frame tell whether it is a spare/strike?
-        Why are isSpare and isStrike methods of the frame, not the game?
-
-        In terms of the programming it seems cleaner this way (and makes the code more readable).
-        But in terms of the abstraction, it seems inconsistent with my point above.
-
-        P.P.S.:
-        It occurs to me that this class mostly handles the scoring.
-        Should it be renamed to something like "BowlingScore"?
-    */
+    public BowlingFrame[] stringToFrames(String rolls) {
+        BowlingFrame[] framesOut = new BowlingFrame[10];
+        for (int index = 0; index < 10; index++) {
+            framesOut[index] = new BowlingFrame();
+        }
+        BowlingFrame currentFrame;
+        System.out.println("Converting:");
+        for (int index = 0; index < 6; index++) {
+            currentFrame = framesOut[index];
+            currentFrame.set(index, index);
+        }
+        for (int index = 0; index < 10; index++) {
+            System.out.println("Check-in 1:");
+            System.out.println("Index: " + index);
+            System.out.println("RollOne: " + framesOut[index].getRollOne());
+        }
+        for (int index = 6; index < 9; index++) {
+            currentFrame = framesOut[index];
+            currentFrame.set(index, 10 - index);
+        }
+        currentFrame = framesOut[9];
+        currentFrame.set(10, 0, 4, 2);
+        return framesOut;
+    }
 
     private int bonusScore(int index) {
         int bonus;

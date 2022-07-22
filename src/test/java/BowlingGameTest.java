@@ -131,19 +131,45 @@ class BowlingGameTest {
     @DisplayName("Convert string of rolls to frame objects")
     void TestStringToFrames() {
         String rolls = "-- 11 22 33 44 55 6/ 7/ 8/ 9/ X42";
-        BowlingFrame[] frames = new BowlingFrame[10];
-        BowlingFrame currentFrame = new BowlingFrame();
+        BowlingFrame[] convertedRolls = game.stringToFrames(rolls);
+        BowlingFrame currentFrame;
+        int trueRollOne;
+        int trueRollSum;
+        int convertedRollOne;
+        int convertedRollSum;
         for (int index = 0; index < 6; index++) {
-            currentFrame.set(index, index);
-            frames[index] = currentFrame;
+            currentFrame = convertedRolls[index];
+            trueRollOne = index;
+            trueRollSum = index * 2;
+            convertedRollOne = currentFrame.getRollOne();
+            convertedRollSum = currentFrame.sumRolls();
+            assertEquals(trueRollOne, convertedRollOne);
+            assertEquals(trueRollSum, convertedRollSum);
         }
-        for (int index = 6; index < 8; index++) {
-            currentFrame.set(index, 10 - index);
-            frames[index] = currentFrame;
+        for (int index = 6; index < 9; index++) {
+            currentFrame = convertedRolls[index];
+            trueRollOne = index;
+            trueRollSum = 10;
+            convertedRollOne = currentFrame.getRollOne();
+            convertedRollSum = currentFrame.sumRolls();
+            assertEquals(trueRollOne, convertedRollOne);
+            assertEquals(trueRollSum, convertedRollSum);
         }
+        currentFrame = convertedRolls[9];
         currentFrame.set(10, 0, 4, 2);
-        frames[9] = currentFrame;
-        assertEquals(frames, BowlingGame.StringtoFrames(rolls));
+        trueRollOne = 10;
+        trueRollSum = 10;
+        int trueExtraRollOne = 4;
+        int trueBonusRoll = 6;
+        convertedRollOne = currentFrame.getRollOne();
+        convertedRollSum = currentFrame.sumRolls();
+        int convertedExtraRollOne = currentFrame.getExtraRollOne();
+        int convertedBonusRoll = currentFrame.getBonusRoll();
+        assertEquals(trueRollOne, convertedRollOne);
+        assertEquals(trueRollSum, convertedRollSum);
+        assertEquals(trueExtraRollOne, convertedExtraRollOne);
+        assertEquals(trueBonusRoll, convertedBonusRoll);
+
     }
 
 }
