@@ -34,8 +34,6 @@ public class BowlingGame {
             currentFrame = new BowlingFrame();
             currentChar = rolls.charAt(stringIndexCurrentFrame);
             nextChar = rolls.charAt(stringIndexCurrentFrame + 1);
-            System.out.println("index: " + index);
-            System.out.println("currentChar: " + currentChar);
             if (currentChar == 'X') {
                 rollOne = 10;
                 currentFrame.set(rollOne, rollTwo);
@@ -61,7 +59,6 @@ public class BowlingGame {
         currentFrame = new BowlingFrame();
 
         currentChar = rolls.charAt(stringIndexCurrentFrame);
-        System.out.println("currentChar: " + currentChar);
         nextChar = rolls.charAt(stringIndexCurrentFrame + 1);
         if (currentChar == 'X') {
             rollOne = 10;
@@ -70,10 +67,6 @@ public class BowlingGame {
             finalChar = rolls.charAt(stringIndexCurrentFrame + 2);
             extraRollOne = Character.getNumericValue(nextChar);
             extraRollTwo = Character.getNumericValue(finalChar);
-            System.out.println("rollOne: " + rollOne);
-            System.out.println("rollTwo: " + rollTwo);
-            System.out.println("extraRollOne: " + extraRollOne);
-            System.out.println("extraRollTwo: " + extraRollTwo);
             currentFrame.set(rollOne, rollTwo, extraRollOne, extraRollTwo);
         } else if (nextChar == '/') {
             rollOne = currentChar;
