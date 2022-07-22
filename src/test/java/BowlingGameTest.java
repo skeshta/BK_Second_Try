@@ -127,4 +127,23 @@ class BowlingGameTest {
         assertEquals(110, game.getScore(frames));
     }
 
+    @Test
+    @DisplayName("Convert string of rolls to frame objects")
+    void TestStringToFrames() {
+        String rolls = "-- 11 22 33 44 55 6/ 7/ 8/ 9/ X42";
+        BowlingFrame[] frames = new BowlingFrame[10];
+        BowlingFrame currentFrame = new BowlingFrame();
+        for (int index = 0; index < 6; index++) {
+            currentFrame.set(index, index);
+            frames[index] = currentFrame;
+        }
+        for (int index = 6; index < 8; index++) {
+            currentFrame.set(index, 10 - index);
+            frames[index] = currentFrame;
+        }
+        currentFrame.set(10, 0, 4, 2);
+        frames[9] = currentFrame;
+        assertEquals(frames, BowlingGame.StringtoFrames(rolls));
+    }
+
 }
