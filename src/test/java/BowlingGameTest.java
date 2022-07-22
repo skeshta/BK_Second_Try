@@ -156,12 +156,12 @@ class BowlingGameTest {
     @Test
     @DisplayName("Convert string of rolls to frame objects")
     void TestStringToFrames() {
-        String rolls = "-- 11 22 33 44 55 6/ 7/ 8/ X42";
+        String rolls = "-- 11 22 33 44 5/ 6/ 7/ 8/ X42";
         BowlingFrame[] convertedRolls = game.stringToFrames(rolls, 10);
-        for (int index = 0; index < 6; index++) {
+        for (int index = 0; index < 5; index++) {
             TestFrameValues(convertedRolls[index], index, index * 2);
         }
-        for (int index = 6; index < 9; index++) {
+        for (int index = 5; index < 9; index++) {
             TestFrameValues(convertedRolls[index], index, 10);
         }
         TestFrameValues(convertedRolls[9], 10, 10, 4, 6);

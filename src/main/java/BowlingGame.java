@@ -29,48 +29,37 @@ public class BowlingGame {
         int rollTwo = 0;
         int extraRollOne = 0;
         int extraRollTwo = 0;
-        if (numberOfFrames > 1) {
-            if (currentChar == 'X') {
-                rollOne = 10;
-                stringIndexNextFrame--;
-            } else if (nextChar == '/') {
-                rollOne = Character.getNumericValue(currentChar);
-                rollTwo = 10 - rollOne;
-            } else {
-                if (currentChar != '-') {
-                    rollOne = Character.getNumericValue(currentChar);
-                }
-                if (nextChar != '-') {
-                    rollTwo = Character.getNumericValue(nextChar);
-                }
+        if (currentChar == 'X') {
+            rollOne = 10;
+            stringIndexNextFrame--;
+            if (numberOfFrames == 1) {
+                char charAfterNext;
+                charAfterNext = rolls.charAt(2);
+                extraRollOne = Character.getNumericValue(nextChar);
+                extraRollTwo = Character.getNumericValue(charAfterNext);
             }
-            rolls = rolls.substring(stringIndexNextFrame);
-            BowlingFrame[] nextRolls = stringToFrames(rolls, numberOfFrames - 1);
-            // Yes, copying the arrays into each other is inefficient.
-            System.arraycopy(nextRolls, 0, framesOut, 1, numberOfFrames - 1);
+        } else if (nextChar == '/') {
+            rollOne = Character.getNumericValue(currentChar);
+            rollTwo = 10 - rollOne;
+            if (numberOfFrames == 1) {
+                extraRollOne = Character.getNumericValue(nextChar);
+            }
         } else {
-            currentFrame = new BowlingFrame();
-            if (currentChar == 'X') {
-                rollOne = 10;
-                char finalChar;
-                finalChar = rolls.charAt(2);
-                extraRollOne = Character.getNumericValue(nextChar);
-                extraRollTwo = Character.getNumericValue(finalChar);
-            } else if (nextChar == '/') {
-                rollOne = currentChar;
-                rollTwo = 10 - rollOne;
-                extraRollOne = Character.getNumericValue(nextChar);
-            } else {
-                if (currentChar != '-') {
-                    rollOne = Character.getNumericValue(currentChar);
-                }
-                if (nextChar != '-') {
-                    rollTwo = Character.getNumericValue(nextChar);
-                }
+            if (currentChar != '-') {
+                rollOne = Character.getNumericValue(currentChar);
+            }
+            if (nextChar != '-') {
+                rollTwo = Character.getNumericValue(nextChar);
             }
         }
         currentFrame.set(rollOne, rollTwo, extraRollOne, extraRollTwo);
         framesOut[0] = currentFrame;
+        if (numberOfFrames > 1) {
+            rolls = rolls.substring(stringIndexNextFrame);
+            BowlingFrame[] nextRolls = stringToFrames(rolls, numberOfFrames - 1);
+            // Yes, copying the arrays into each other is inefficient.
+            System.arraycopy(nextRolls, 0, framesOut, 1, numberOfFrames - 1);
+        }
         return framesOut;
     }
 
