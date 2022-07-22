@@ -157,7 +157,7 @@ class BowlingGameTest {
     @DisplayName("Convert string of rolls to frame objects")
     void TestStringToFrames() {
         String rolls = "-- 11 22 33 44 55 6/ 7/ 8/ X42";
-        BowlingFrame[] convertedRolls = game.stringToFrames(rolls);
+        BowlingFrame[] convertedRolls = game.stringToFrames(rolls, 10);
         for (int index = 0; index < 6; index++) {
             TestFrameValues(convertedRolls[index], index, index * 2);
         }
@@ -171,7 +171,7 @@ class BowlingGameTest {
     @DisplayName("Convert string of rolls to frame objects")
     void TestStringToFramesAllZeroes() {
         String rolls = "-- -- -- -- -- -- -- -- -- --";
-        BowlingFrame[] convertedRolls = game.stringToFrames(rolls);
+        BowlingFrame[] convertedRolls = game.stringToFrames(rolls, 10);
         for (int index = 0; index < 10; index++) {
             TestFrameValues(convertedRolls[index], 0, 0);
         }
