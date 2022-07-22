@@ -22,15 +22,9 @@ public class BowlingGame {
             framesOut[index] = new BowlingFrame();
         }
         BowlingFrame currentFrame;
-        System.out.println("Converting:");
         for (int index = 0; index < 6; index++) {
             currentFrame = framesOut[index];
             currentFrame.set(index, index);
-        }
-        for (int index = 0; index < 10; index++) {
-            System.out.println("Check-in 1:");
-            System.out.println("Index: " + index);
-            System.out.println("RollOne: " + framesOut[index].getRollOne());
         }
         for (int index = 6; index < 9; index++) {
             currentFrame = framesOut[index];

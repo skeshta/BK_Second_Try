@@ -128,48 +128,43 @@ class BowlingGameTest {
     }
 
     @Test
+    @DisplayName("Frame has correct values")
+    void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realRollSum) {
+        int testRollOne;
+        int testRollSum;
+        testRollOne = testFrame.getRollOne();
+        testRollSum = testFrame.sumRolls();
+        assertEquals(realRollOne, testRollOne);
+        assertEquals(realRollSum, testRollSum);
+    }
+
+    @Test
+    @DisplayName("Frame has correct values")
+    void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realRollSum, int realExtraRollOne, int realBonusRoll) {
+        int testRollOne;
+        int testRollSum;
+        int testExtraRollOne = testFrame.getExtraRollOne();
+        int testBonusRoll = testFrame.getBonusRoll();
+        testRollOne = testFrame.getRollOne();
+        testRollSum = testFrame.sumRolls();
+        assertEquals(realRollOne, testRollOne);
+        assertEquals(realRollSum, testRollSum);
+        assertEquals(realExtraRollOne, testExtraRollOne);
+        assertEquals(realBonusRoll, testBonusRoll);
+    }
+
+    @Test
     @DisplayName("Convert string of rolls to frame objects")
     void TestStringToFrames() {
         String rolls = "-- 11 22 33 44 55 6/ 7/ 8/ 9/ X42";
         BowlingFrame[] convertedRolls = game.stringToFrames(rolls);
-        BowlingFrame currentFrame;
-        int trueRollOne;
-        int trueRollSum;
-        int convertedRollOne;
-        int convertedRollSum;
         for (int index = 0; index < 6; index++) {
-            currentFrame = convertedRolls[index];
-            trueRollOne = index;
-            trueRollSum = index * 2;
-            convertedRollOne = currentFrame.getRollOne();
-            convertedRollSum = currentFrame.sumRolls();
-            assertEquals(trueRollOne, convertedRollOne);
-            assertEquals(trueRollSum, convertedRollSum);
+            TestFrameValues(convertedRolls[index], index, index * 2);
         }
         for (int index = 6; index < 9; index++) {
-            currentFrame = convertedRolls[index];
-            trueRollOne = index;
-            trueRollSum = 10;
-            convertedRollOne = currentFrame.getRollOne();
-            convertedRollSum = currentFrame.sumRolls();
-            assertEquals(trueRollOne, convertedRollOne);
-            assertEquals(trueRollSum, convertedRollSum);
+            TestFrameValues(convertedRolls[index], index, 10);
         }
-        currentFrame = convertedRolls[9];
-        currentFrame.set(10, 0, 4, 2);
-        trueRollOne = 10;
-        trueRollSum = 10;
-        int trueExtraRollOne = 4;
-        int trueBonusRoll = 6;
-        convertedRollOne = currentFrame.getRollOne();
-        convertedRollSum = currentFrame.sumRolls();
-        int convertedExtraRollOne = currentFrame.getExtraRollOne();
-        int convertedBonusRoll = currentFrame.getBonusRoll();
-        assertEquals(trueRollOne, convertedRollOne);
-        assertEquals(trueRollSum, convertedRollSum);
-        assertEquals(trueExtraRollOne, convertedExtraRollOne);
-        assertEquals(trueBonusRoll, convertedBonusRoll);
-
+        TestFrameValues(convertedRolls[9], 10, 10, 4, 6);
     }
 
 }
