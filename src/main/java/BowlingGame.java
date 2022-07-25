@@ -1,8 +1,8 @@
 public class BowlingGame {
-    private BowlingFrame[] frames;
     private final int numberOfFrames = 10;
     private final int finalFrameIndex = numberOfFrames - 1;
     private int totalScore = 0;
+    private BowlingFrame[] frames = new BowlingFrame[numberOfFrames];
 
     public int getScore(String rolls) {
         int currentScore;
@@ -17,12 +17,12 @@ public class BowlingGame {
     }
 
     public BowlingFrame[] stringToFrames(String rolls) {
-        frames = new BowlingFrame[numberOfFrames];
+        BowlingFrame[] framesOut = new BowlingFrame[numberOfFrames];
         BowlingFrame currentFrame;
         int stringIndexNextFrame;
         for (int index = 0; index < finalFrameIndex; index++) {
             currentFrame = extractFirstFrame(rolls, index);
-            frames[index] = currentFrame;
+            framesOut[index] = currentFrame;
             if (currentFrame.isStrike()) {
                 stringIndexNextFrame = 2;
             } else {
@@ -30,8 +30,8 @@ public class BowlingGame {
             }
             rolls = rolls.substring(stringIndexNextFrame);
         }
-        frames[finalFrameIndex] = extractFirstFrame(rolls, finalFrameIndex);
-        return frames;
+        framesOut[finalFrameIndex] = extractFirstFrame(rolls, finalFrameIndex);
+        return framesOut;
     }
 
     private BowlingFrame extractFirstFrame(String rolls, int index) {
