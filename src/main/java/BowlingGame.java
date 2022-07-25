@@ -1,13 +1,12 @@
 public class BowlingGame {
     private BowlingFrame[] frames;
-    private int finalFrameIndex = 9;
+    private final int numberOfFrames = 10;
+    private final int finalFrameIndex = numberOfFrames - 1;
     private int totalScore = 0;
 
     public int getScore(String rolls) {
-        //int totalScore = 0;
         int currentScore;
-        frames = stringToFrames(rolls, 10);
-        //finalFrameIndex = frames.length - 1;
+        frames = stringToFrames(rolls);
         BowlingFrame currentFrame;
         for (int index = 0; index <= finalFrameIndex; index++) {
             currentFrame = frames[index];
@@ -17,67 +16,74 @@ public class BowlingGame {
         return totalScore;
     }
 
-    public BowlingFrame[] stringToFrames(String rolls, int numberOfFrames) {
-        /*
-        For simplicity, let's assume good inputs.
-        */
-        BowlingFrame[] framesOut = new BowlingFrame[numberOfFrames];
-        BowlingFrame currentFrame = new BowlingFrame();
-        char currentRoll = rolls.charAt(0);
-        char nextRoll = rolls.charAt(1);
-        int stringIndexNextFrame = 3;
+    public BowlingFrame[] stringToFrames(String rolls) {
+        frames = new BowlingFrame[numberOfFrames];
+        BowlingFrame currentFrame;
+        int stringIndexNextFrame;
+        for (int index = 0; index < finalFrameIndex; index++) {
+            currentFrame = extractFirstFrame(rolls, index);
+            frames[index] = currentFrame;
+            if (currentFrame.isStrike()) {
+                stringIndexNextFrame = 2;
+            } else {
+                stringIndexNextFrame = 3;
+            }
+            rolls = rolls.substring(stringIndexNextFrame);
+        }
+        frames[finalFrameIndex] = extractFirstFrame(rolls, finalFrameIndex);
+        return frames;
+    }
+
+    private BowlingFrame extractFirstFrame(String rolls, int index) {
+        char strikeChar = 'X';
+        char spareChar = '/';
+        char missChar = '-';
+        int strikeRoll = 10;
         int rollOne = 0;
         int rollTwo = 0;
         int extraRollOne = 0;
         int extraRollTwo = 0;
-        if (currentRoll == 'X') {
-            rollOne = 10;
-            stringIndexNextFrame--;
-            if (numberOfFrames == 1) {
-                if (nextRoll == 'X') {
-                    extraRollOne = 10;
-                } else if (nextRoll != '-') {
+        BowlingFrame currentFrame = new BowlingFrame();
+        char currentRoll = rolls.charAt(0);
+        char nextRoll = rolls.charAt(1);
+        if (currentRoll == strikeChar) {
+            rollOne = strikeRoll;
+            if (index == finalFrameIndex) {
+                if (nextRoll == strikeChar) {
+                    extraRollOne = strikeRoll;
+                } else if (nextRoll != missChar) {
                     extraRollOne = Character.getNumericValue(nextRoll);
                 }
                 char rollAfterNext;
                 rollAfterNext = rolls.charAt(2);
-                if (rollAfterNext == 'X') {
-                    extraRollTwo = 10;
-                } else if (rollAfterNext != '-') {
+                if (rollAfterNext == strikeChar) {
+                    extraRollTwo = strikeRoll;
+                } else if (rollAfterNext != missChar) {
                     extraRollTwo = Character.getNumericValue(rollAfterNext);
                 }
-                //extraRollOne = Character.getNumericValue(nextChar);
-                //extraRollTwo = Character.getNumericValue(charAfterNext);
             }
-        } else if (nextRoll == '/') {
+        } else if (nextRoll == spareChar) {
             rollOne = Character.getNumericValue(currentRoll);
-            rollTwo = 10 - rollOne;
-            if (numberOfFrames == 1) {
+            rollTwo = strikeRoll - rollOne;
+            if (index == finalFrameIndex) {
                 char rollAfterNext;
                 rollAfterNext = rolls.charAt(2);
-                if (rollAfterNext == 'X') {
+                if (rollAfterNext == strikeChar) {
                     extraRollOne = 10;
-                } else if (rollAfterNext != '-') {
+                } else if (rollAfterNext != missChar) {
                     extraRollOne = Character.getNumericValue(rollAfterNext);
                 }
             }
         } else {
-            if (currentRoll != '-') {
+            if (currentRoll != missChar) {
                 rollOne = Character.getNumericValue(currentRoll);
             }
-            if (nextRoll != '-') {
+            if (nextRoll != missChar) {
                 rollTwo = Character.getNumericValue(nextRoll);
             }
         }
         currentFrame.set(rollOne, rollTwo, extraRollOne, extraRollTwo);
-        framesOut[0] = currentFrame;
-        if (numberOfFrames > 1) {
-            rolls = rolls.substring(stringIndexNextFrame);
-            BowlingFrame[] nextRolls = stringToFrames(rolls, numberOfFrames - 1);
-            // Yes, copying the arrays into each other is inefficient.
-            System.arraycopy(nextRolls, 0, framesOut, 1, numberOfFrames - 1);
-        }
-        return framesOut;
+        return currentFrame;
     }
 
     private int bonusScore(int index) {
