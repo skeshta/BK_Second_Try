@@ -1,12 +1,13 @@
 public class BowlingGame {
     private BowlingFrame[] frames;
-    private int finalFrameIndex;
+    private int finalFrameIndex = 9;
+    private int totalScore = 0;
 
     public int getScore(String rolls) {
-        int totalScore = 0;
+        //int totalScore = 0;
         int currentScore;
         frames = stringToFrames(rolls, 10);
-        finalFrameIndex = frames.length - 1;
+        //finalFrameIndex = frames.length - 1;
         BowlingFrame currentFrame;
         for (int index = 0; index <= finalFrameIndex; index++) {
             currentFrame = frames[index];
@@ -99,7 +100,7 @@ public class BowlingGame {
             bonus = nextFrame.sumRolls();
             if (nextFrame.isStrike()) {
                 if (index + 1 < finalFrameIndex) {
-                    BowlingFrame frameAfterNext = frames[index + 1];
+                    BowlingFrame frameAfterNext = frames[index + 2];
                     bonus += frameAfterNext.getRollOne();
                 } else {
                     bonus += nextFrame.getExtraRollOne();
@@ -113,7 +114,6 @@ public class BowlingGame {
         int bonus = 0;
         BowlingFrame currentFrame = frames[finalFrameIndex];
         if (currentFrame.isSpare() || currentFrame.isStrike()) {
-            // This works because we're assuming good inputs.
             bonus = currentFrame.getBonusRoll();
         }
         return bonus;
