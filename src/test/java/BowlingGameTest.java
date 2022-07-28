@@ -18,11 +18,6 @@ class BowlingGameTest {
         game = null;
     }
 
-    /*
-    This test, to sum 2 regular frames, seems redundant since
-        (1) we only want to score a complete game.
-        (2) We have a test that sums 10 regular frames.
-    */
     @Test
     @DisplayName("Two regular frames")
     void TestSum2RegularFrames() {
@@ -128,6 +123,13 @@ class BowlingGameTest {
         for (int index = 0; index < 10; index++) {
             TestFrameValues(convertedRolls[index], 0, 0);
         }
+    }
+
+    @Test
+    @DisplayName("stringToFrame with a -/ spare")
+    void TestStringToFrameSpare() {
+        String rolls = "-/ -- -- -- -- -- -- -- -- --";
+        assertEquals(10, game.getScore(rolls));
     }
 
 }

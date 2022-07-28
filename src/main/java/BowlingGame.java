@@ -1,6 +1,10 @@
 public class BowlingGame {
     private final int numberOfFrames = 10;
     private final int finalFrameIndex = numberOfFrames - 1;
+    private final char strikeChar = 'X';
+    private final char spareChar = '/';
+    private final char missChar = '-';
+    private final int maxPins = 10;
     private int totalScore = 0;
     private BowlingFrame[] frames = new BowlingFrame[numberOfFrames];
 
@@ -8,7 +12,7 @@ public class BowlingGame {
         int currentScore;
         frames = stringToFrames(rolls);
         BowlingFrame currentFrame;
-        for (int index = 0; index <= finalFrameIndex; index++) {
+        for (int index = 0; index < numberOfFrames; index++) {
             currentFrame = frames[index];
             currentScore = currentFrame.sumRolls() + bonusScore(index);
             totalScore += currentScore;
@@ -19,26 +23,22 @@ public class BowlingGame {
     public BowlingFrame[] stringToFrames(String rolls) {
         BowlingFrame[] framesOut = new BowlingFrame[numberOfFrames];
         BowlingFrame currentFrame;
-        int stringIndexNextFrame;
+        int NextFrameStringIndex;
         for (int index = 0; index < finalFrameIndex; index++) {
-            currentFrame = extractFirstFrame(rolls, index);
+            currentFrame = stringToFrameOngoing(rolls);
             framesOut[index] = currentFrame;
             if (currentFrame.isStrike()) {
-                stringIndexNextFrame = 2;
+                NextFrameStringIndex = 2;
             } else {
-                stringIndexNextFrame = 3;
+                NextFrameStringIndex = 3;
             }
-            rolls = rolls.substring(stringIndexNextFrame);
+            rolls = rolls.substring(NextFrameStringIndex);
         }
-        framesOut[finalFrameIndex] = extractFirstFrame(rolls, finalFrameIndex);
+        framesOut[finalFrameIndex] = stringToFrameFinal(rolls);
         return framesOut;
     }
 
-    private BowlingFrame extractFirstFrame(String rolls, int index) {
-        char strikeChar = 'X';
-        char spareChar = '/';
-        char missChar = '-';
-        int strikeRoll = 10;
+    private BowlingFrame stringToFrameOngoing(String rolls) {
         int rollOne = 0;
         int rollTwo = 0;
         int extraRollOne = 0;
@@ -47,32 +47,55 @@ public class BowlingGame {
         char currentRoll = rolls.charAt(0);
         char nextRoll = rolls.charAt(1);
         if (currentRoll == strikeChar) {
-            rollOne = strikeRoll;
-            if (index == finalFrameIndex) {
-                if (nextRoll == strikeChar) {
-                    extraRollOne = strikeRoll;
-                } else if (nextRoll != missChar) {
-                    extraRollOne = Character.getNumericValue(nextRoll);
-                }
-                char rollAfterNext;
-                rollAfterNext = rolls.charAt(2);
-                if (rollAfterNext == strikeChar) {
-                    extraRollTwo = strikeRoll;
-                } else if (rollAfterNext != missChar) {
-                    extraRollTwo = Character.getNumericValue(rollAfterNext);
-                }
+            rollOne = maxPins;
+        } else if (nextRoll == spareChar) {
+            if (currentRoll != missChar) {
+                rollOne = Character.getNumericValue(currentRoll);
+            }
+            rollTwo = maxPins - rollOne;
+        } else {
+            if (currentRoll != missChar) {
+                rollOne = Character.getNumericValue(currentRoll);
+            }
+            if (nextRoll != missChar) {
+                rollTwo = Character.getNumericValue(nextRoll);
+            }
+        }
+        currentFrame.set(rollOne, rollTwo, extraRollOne, extraRollTwo);
+        return currentFrame;
+    }
+
+    private BowlingFrame stringToFrameFinal(String rolls) {
+        int rollOne = 0;
+        int rollTwo = 0;
+        int extraRollOne = 0;
+        int extraRollTwo = 0;
+        BowlingFrame currentFrame = new BowlingFrame();
+        char currentRoll = rolls.charAt(0);
+        char nextRoll = rolls.charAt(1);
+        if (currentRoll == strikeChar) {
+            char rollAfterNext = rolls.charAt(2);
+            rollOne = maxPins;
+            if (nextRoll == strikeChar) {
+                extraRollOne = maxPins;
+            } else if (nextRoll != missChar) {
+                extraRollOne = Character.getNumericValue(nextRoll);
+            }
+            if (rollAfterNext == strikeChar) {
+                extraRollTwo = maxPins;
+            } else if (rollAfterNext != missChar) {
+                extraRollTwo = Character.getNumericValue(rollAfterNext);
             }
         } else if (nextRoll == spareChar) {
-            rollOne = Character.getNumericValue(currentRoll);
-            rollTwo = strikeRoll - rollOne;
-            if (index == finalFrameIndex) {
-                char rollAfterNext;
-                rollAfterNext = rolls.charAt(2);
-                if (rollAfterNext == strikeChar) {
-                    extraRollOne = 10;
-                } else if (rollAfterNext != missChar) {
-                    extraRollOne = Character.getNumericValue(rollAfterNext);
-                }
+            char rollAfterNext = rolls.charAt(2);
+            if (currentRoll != missChar) {
+                rollOne = Character.getNumericValue(currentRoll);
+            }
+            rollTwo = maxPins - rollOne;
+            if (rollAfterNext == strikeChar) {
+                extraRollOne = maxPins;
+            } else if (rollAfterNext != missChar) {
+                extraRollOne = Character.getNumericValue(rollAfterNext);
             }
         } else {
             if (currentRoll != missChar) {
