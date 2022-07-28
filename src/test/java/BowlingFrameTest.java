@@ -11,6 +11,7 @@ class BowlingFrameTest {
     @BeforeEach
     void setUp() {
         frame = new BowlingFrame();
+        frame.setMaxPins(10);
     }
 
     @AfterEach
@@ -21,50 +22,50 @@ class BowlingFrameTest {
     @Test
     @DisplayName("Sum both rolls")
     void TestSumRolls() {
-        frame.set(1, 4);
-        assertEquals(5, frame.sumRolls());
+        frame.setRolls(1, 4);
+        assertEquals(5, frame.sumRollsOneAndTwo());
     }
 
     @Test
     @DisplayName("Extract roll 1")
     void TestGetRollOne() {
-        frame.set(7, 0);
+        frame.setRolls(7, 0);
         assertEquals(7, frame.getRollOne());
     }
 
     @Test
     @DisplayName("Extract bonus roll 1")
-    void TestGetBonusRollOne() {
-        frame.set(10, 0, 4);
-        assertEquals(4, frame.getExtraRollOne());
+    void TestGetRollThree() {
+        frame.setRolls(10, 0, 4);
+        assertEquals(4, frame.getRollThree());
     }
 
     @Test
     @DisplayName("Bonus rolls default to 0")
     void Test0BonusRolls() {
-        frame.set(2, 3);
-        assertEquals(0, frame.getBonusRoll());
+        frame.setRolls(2, 3);
+        assertEquals(0, frame.getRollThree());
     }
 
     @Test
     @DisplayName("Can set one bonus roll")
     void Test1BonusRoll() {
-        frame.set(1, 9, 5);
-        assertEquals(5, frame.getBonusRoll());
+        frame.setRolls(1, 9, 5);
+        assertEquals(5, frame.getRollThree());
     }
 
     @Test
     @DisplayName("Can set two bonus rolls")
     void Test2BonusRolls() {
-        frame.set(10, 0, 2, 3);
-        assertEquals(5, frame.getBonusRoll());
+        frame.setRolls(10, 2, 3);
+        assertEquals(5, frame.sumRollsTwoAndThree());
     }
 
     @Test
     @DisplayName("Identify all spares")
     void TestIsSpare() {
         for (int count = 0; count < 10; count++) {
-            frame.set(count, 10 - count);
+            frame.setRolls(count, 10 - count);
             assertTrue(frame.isSpare());
         }
     }
@@ -72,21 +73,21 @@ class BowlingFrameTest {
     @Test
     @DisplayName("Regular frames are not spares")
     void TestRegularIsNotSpare() {
-        frame.set(2, 3);
+        frame.setRolls(2, 3);
         assertFalse(frame.isSpare());
     }
 
     @Test
     @DisplayName("Strikes are not spares")
     void TestStrikeIsNotSpare() {
-        frame.set(10, 0);
+        frame.setRolls(10, 0);
         assertFalse(frame.isSpare());
     }
 
     @Test
     @DisplayName("Identify a strike")
     void TestIsStrike() {
-        frame.set(10, 0);
+        frame.setRolls(10, 0);
         assertTrue(frame.isStrike());
     }
 

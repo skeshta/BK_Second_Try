@@ -1,53 +1,49 @@
 public class BowlingFrame {
     private int rollOne;
     private int rollTwo;
-    private int extraRollOne = 0;
-    private int extraRollTwo = 0;
+    private int rollThree = 0;
+    private int maxPins;
 
-    public void set(int firstRoll, int secondRoll) {
+    public void setRolls(int firstRoll, int secondRoll) {
         rollOne = firstRoll;
         rollTwo = secondRoll;
     }
 
-    public void set(int firstRoll, int secondRoll, int firstExtraRoll) {
+    public void setRolls(int firstRoll, int secondRoll, int thirdRoll) {
         rollOne = firstRoll;
         rollTwo = secondRoll;
-        extraRollOne = firstExtraRoll;
+        rollThree = thirdRoll;
     }
 
-    public void set(int firstRoll, int secondRoll, int firstExtraRoll, int secondExtraRoll) {
-        rollOne = firstRoll;
-        rollTwo = secondRoll;
-        extraRollOne = firstExtraRoll;
-        extraRollTwo = secondExtraRoll;
+    public void setMaxPins(int maximumPins) {
+        maxPins = maximumPins;
     }
 
-    public int sumRolls() {
-        int sum = rollOne + rollTwo;
-        return sum;
+    public int sumRollsOneAndTwo() {
+        return rollOne + rollTwo;
     }
 
     public int getRollOne() {
         return rollOne;
     }
 
-    public int getBonusRoll() {
-        return extraRollOne + extraRollTwo;
+    public int getRollThree() {
+        return rollThree;
     }
 
-    public int getExtraRollOne() {
-        return extraRollOne;
+    public int sumRollsTwoAndThree() {
+        return rollTwo + rollThree;
     }
 
     public boolean isSpare() {
         boolean isSpareOrNot;
-        isSpareOrNot = (sumRolls() == 10 && rollOne != 10);
+        isSpareOrNot = (sumRollsOneAndTwo() == maxPins && rollOne != maxPins);
         return isSpareOrNot;
     }
 
     public boolean isStrike() {
         boolean isStrikeOrNot;
-        isStrikeOrNot = (rollOne == 10 && rollTwo == 0);
+        isStrikeOrNot = (rollOne == maxPins);
         return isStrikeOrNot;
     }
 }

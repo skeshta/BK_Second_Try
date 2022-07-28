@@ -22,83 +22,92 @@ class BowlingGameTest {
     @DisplayName("Two regular frames")
     void TestSum2RegularFrames() {
         String rolls = "25 36 -- -- -- -- -- -- -- --";
-        assertEquals(16, game.getScore(rolls));
+        assertEquals(16, game.getGameScore(rolls));
     }
 
     @Test
     @DisplayName("Ten regular frames")
     void TestSum10RegularFrames () {
         String rolls = "23 23 23 23 23 23 23 23 23 23";
-        assertEquals(50, game.getScore(rolls));
+        assertEquals(50, game.getGameScore(rolls));
     }
 
     @Test
     @DisplayName("Ten frames with 0 points each")
     void Test10ZeroFrames() {
         String rolls = "-- -- -- -- -- -- -- -- -- --";
-        assertEquals(0, game.getScore(rolls));
+        assertEquals(0, game.getGameScore(rolls));
     }
 
-    /*
-    As above, this test sums only 2 frames.
-    Probably we should add a test with 10 frames and 1 spare.
-    Analogously for the strikes.
-    */
     @Test
     @DisplayName("A spare and a regular frame")
     void TestSparePlusRegular () {
         String rolls = "1/ 23 -- -- -- -- -- -- -- --";
-        assertEquals(17, game.getScore(rolls));
+        assertEquals(17, game.getGameScore(rolls));
     }
 
     @Test
     @DisplayName("A strike and a regular frame")
     void TestStrikePlusRegular() {
         String rolls = "X 23 -- -- -- -- -- -- -- --";
-        assertEquals(20, game.getScore(rolls));
+        assertEquals(20, game.getGameScore(rolls));
     }
 
     @Test
     @DisplayName("Ten strikes with perfect bonus rolls")
     void TestSum10Strikes() {
         String rolls = "X X X X X X X X X XXX";
-        assertEquals(300, game.getScore(rolls));
+        assertEquals(300, game.getGameScore(rolls));
     }
 
     @Test
     @DisplayName("All frames are spares")
     void TestAllFramesAreSpares() {
         String rolls = "1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/ 1/1";
-        assertEquals(110, game.getScore(rolls));
+        assertEquals(110, game.getGameScore(rolls));
     }
 
     @Test
     @DisplayName("Two strikes in a row")
     void TestTwoStrikesInARow() {
         String rolls = "X X 1- -- -- -- -- -- -- --";
-        assertEquals(33, game.getScore(rolls));
+        assertEquals(33, game.getGameScore(rolls));
+    }
+
+    @Test
+    @DisplayName("stringToFrame with a -/ spare")
+    void TestStringToFrameSpare() {
+        String rolls = "-/ -- -- -- -- -- -- -- -- --";
+        assertEquals(10, game.getGameScore(rolls));
+    }
+
+    @Test
+    @DisplayName("A strike and a spare in a row")
+    void TestStrikeAndSpare() {
+        String rolls = "X 1/ -- -- -- -- -- -- -- --";
+        assertEquals(30, game.getGameScore(rolls));
     }
 
     void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realRollSum) {
         int testRollOne;
         int testRollSum;
         testRollOne = testFrame.getRollOne();
-        testRollSum = testFrame.sumRolls();
+        testRollSum = testFrame.sumRollsOneAndTwo();
         assertEquals(realRollOne, testRollOne);
         assertEquals(realRollSum, testRollSum);
     }
 
-    void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realRollSum, int realExtraRollOne, int realBonusRoll) {
+    void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realSumRollOneAndTwo, int realRollThree, int realSumRollTwoAndThree) {
         int testRollOne;
-        int testRollSum;
-        int testExtraRollOne = testFrame.getExtraRollOne();
-        int testBonusRoll = testFrame.getBonusRoll();
+        int testSumRollOneAndTwo;
+        int testRollThree = testFrame.getRollThree();
+        int testSumRollTwoAndThree = testFrame.sumRollsTwoAndThree();
         testRollOne = testFrame.getRollOne();
-        testRollSum = testFrame.sumRolls();
+        testSumRollOneAndTwo = testFrame.sumRollsOneAndTwo();
         assertEquals(realRollOne, testRollOne);
-        assertEquals(realRollSum, testRollSum);
-        assertEquals(realExtraRollOne, testExtraRollOne);
-        assertEquals(realBonusRoll, testBonusRoll);
+        assertEquals(realSumRollOneAndTwo, testSumRollOneAndTwo);
+        assertEquals(realRollThree, testRollThree);
+        assertEquals(realSumRollTwoAndThree, testSumRollTwoAndThree);
     }
 
     @Test
@@ -112,7 +121,7 @@ class BowlingGameTest {
         for (int index = 5; index < 9; index++) {
             TestFrameValues(convertedRolls[index], index, 10);
         }
-        TestFrameValues(convertedRolls[9], 10, 10, 4, 6);
+        TestFrameValues(convertedRolls[9], 10, 14, 2, 6);
     }
 
     @Test
@@ -123,13 +132,6 @@ class BowlingGameTest {
         for (int index = 0; index < 10; index++) {
             TestFrameValues(convertedRolls[index], 0, 0);
         }
-    }
-
-    @Test
-    @DisplayName("stringToFrame with a -/ spare")
-    void TestStringToFrameSpare() {
-        String rolls = "-/ -- -- -- -- -- -- -- -- --";
-        assertEquals(10, game.getScore(rolls));
     }
 
 }
