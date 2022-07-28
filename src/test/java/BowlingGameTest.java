@@ -11,7 +11,7 @@ class BowlingGameTest {
     @BeforeEach
     void setUp() {
         game = new BowlingGame();
-        game.setup(10, 10, 'X', '/', '-');
+        game.setup(10, 10, 'X', '/', '-', ' ');
     }
 
     @AfterEach
