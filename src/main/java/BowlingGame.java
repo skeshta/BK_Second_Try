@@ -1,15 +1,28 @@
 public class BowlingGame {
-    private final int numberOfFrames = 10;
-    private final int finalFrameIndex = numberOfFrames - 1;
-    private final char strikeChar = 'X';
-    private final char spareChar = '/';
-    private final char missChar = '-';
-    private final int maxPins = 10;
-    private int gameScore = 0;
-    private BowlingFrame[] frames = new BowlingFrame[numberOfFrames];
+    private int numberOfFrames;
+    private int numberOfPins;
+    private int finalFrameIndex;
+    private char strikeChar;
+    private char spareChar;
+    private char missChar;
+    private int gameScore;
+    private BowlingFrame[] frames;
 
-    public int getGameScore(String rolls) {
-        frames = stringToFrames(rolls);
+    public void setup(int maxPins, int maxFrames, char strike, char spare, char miss) {
+        numberOfFrames = maxFrames;
+        numberOfPins = maxPins;
+        finalFrameIndex = numberOfFrames - 1;
+        strikeChar = strike;
+        spareChar = spare;
+        missChar = miss;
+        gameScore = 0;
+    }
+
+    public BowlingFrame[] getFrames() {
+        return frames;
+    }
+
+    public int getGameScore() {
         for (int index = 0; index < finalFrameIndex; index++) {
             gameScore += scoreOngoingFrame(index);
         }
@@ -17,24 +30,23 @@ public class BowlingGame {
         return gameScore;
     }
 
-    public BowlingFrame[] stringToFrames(String rolls) {
-        BowlingFrame[] framesOut = new BowlingFrame[numberOfFrames];
+    public void setFrames(String rolls) {
+        frames = new BowlingFrame[numberOfFrames];
         BowlingFrame currentFrame;
-        int NextFrameStringIndex;
+        int startOfNextFrame;
         for (int index = 0; index < finalFrameIndex; index++) {
             currentFrame = stringToFrameOngoing(rolls);
-            currentFrame.setMaxPins(maxPins);
-            framesOut[index] = currentFrame;
+            currentFrame.setMaxPins(numberOfPins);
+            frames[index] = currentFrame;
             if (currentFrame.isStrike()) {
-                NextFrameStringIndex = 2;
+                startOfNextFrame = 2;
             } else {
-                NextFrameStringIndex = 3;
+                startOfNextFrame = 3;
             }
-            rolls = rolls.substring(NextFrameStringIndex);
+            rolls = rolls.substring(startOfNextFrame);
         }
-        framesOut[finalFrameIndex] = stringToFrameFinal(rolls);
-        framesOut[finalFrameIndex].setMaxPins(maxPins);
-        return framesOut;
+        frames[finalFrameIndex] = stringToFrameFinal(rolls);
+        frames[finalFrameIndex].setMaxPins(numberOfPins);
     }
 
     private BowlingFrame stringToFrameOngoing(String rolls) {
@@ -44,12 +56,12 @@ public class BowlingGame {
         char currentRoll = rolls.charAt(0);
         char nextRoll = rolls.charAt(1);
         if (currentRoll == strikeChar) {
-            rollOne = maxPins;
+            rollOne = numberOfPins;
         } else if (nextRoll == spareChar) {
             if (currentRoll != missChar) {
                 rollOne = Character.getNumericValue(currentRoll);
             }
-            rollTwo = maxPins - rollOne;
+            rollTwo = numberOfPins - rollOne;
         } else {
             if (currentRoll != missChar) {
                 rollOne = Character.getNumericValue(currentRoll);
@@ -71,14 +83,14 @@ public class BowlingGame {
         char nextRoll = rolls.charAt(1);
         if (currentRoll == strikeChar) {
             char rollAfterNext = rolls.charAt(2);
-            rollOne = maxPins;
+            rollOne = numberOfPins;
             if (nextRoll == strikeChar) {
-                rollTwo = maxPins;
+                rollTwo = numberOfPins;
             } else if (nextRoll != missChar) {
                 rollTwo = Character.getNumericValue(nextRoll);
             }
             if (rollAfterNext == strikeChar) {
-                rollThree = maxPins;
+                rollThree = numberOfPins;
             } else if (rollAfterNext != missChar) {
                 rollThree = Character.getNumericValue(rollAfterNext);
             }
@@ -87,9 +99,9 @@ public class BowlingGame {
             if (currentRoll != missChar) {
                 rollOne = Character.getNumericValue(currentRoll);
             }
-            rollTwo = maxPins - rollOne;
+            rollTwo = numberOfPins - rollOne;
             if (rollAfterNext == strikeChar) {
-                rollThree = maxPins;
+                rollThree = numberOfPins;
             } else if (rollAfterNext != missChar) {
                 rollThree = Character.getNumericValue(rollAfterNext);
             }
