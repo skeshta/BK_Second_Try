@@ -19,31 +19,25 @@ public class BowlingFrame {
         maxPins = maximumPins;
     }
 
-    public int sumRollsOneAndTwo() {
-        return rollOne + rollTwo;
-    }
-
     public int getRollOne() {
         return rollOne;
+    }
+
+    public int getRollTwo() {
+        return rollTwo;
     }
 
     public int getRollThree() {
         return rollThree;
     }
 
-    public int sumRollsTwoAndThree() {
-        return rollTwo + rollThree;
-    }
-
     public boolean isSpare() {
         boolean isSpareOrNot;
-        isSpareOrNot = (sumRollsOneAndTwo() == maxPins && rollOne != maxPins);
+        isSpareOrNot = (rollOne + rollTwo == maxPins && rollOne != maxPins);
         return isSpareOrNot;
     }
 
     public boolean isStrike() {
-        boolean isStrikeOrNot;
-        isStrikeOrNot = (rollOne == maxPins);
-        return isStrikeOrNot;
+        return rollOne == maxPins;
     }
 }

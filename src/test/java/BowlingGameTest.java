@@ -88,11 +88,25 @@ class BowlingGameTest {
         assertEquals(30, game.getGameScore(rolls));
     }
 
+    @Test
+    @DisplayName("A strike and a miss in a row")
+    void TestStrikeAndMiss() {
+        String rolls = "X -1 -- -- -- -- -- -- -- -- --";
+        assertEquals(12, game.getGameScore(rolls));
+    }
+
+    @Test
+    @DisplayName("A spare and a miss in a row")
+    void TestSpareAndMiss() {
+        String rolls = "3/ -1 -- -- -- -- -- -- -- -- --";
+        assertEquals(11, game.getGameScore(rolls));
+    }
+
     void TestFrameValues(BowlingFrame testFrame, int realRollOne, int realRollSum) {
         int testRollOne;
         int testRollSum;
         testRollOne = testFrame.getRollOne();
-        testRollSum = testFrame.sumRollsOneAndTwo();
+        testRollSum = testFrame.getRollOne() + testFrame.getRollTwo();
         assertEquals(realRollOne, testRollOne);
         assertEquals(realRollSum, testRollSum);
     }
@@ -101,9 +115,9 @@ class BowlingGameTest {
         int testRollOne;
         int testSumRollOneAndTwo;
         int testRollThree = testFrame.getRollThree();
-        int testSumRollTwoAndThree = testFrame.sumRollsTwoAndThree();
+        int testSumRollTwoAndThree = testFrame.getRollTwo() + testFrame.getRollThree();
         testRollOne = testFrame.getRollOne();
-        testSumRollOneAndTwo = testFrame.sumRollsOneAndTwo();
+        testSumRollOneAndTwo = testFrame.getRollOne() + testFrame.getRollTwo();
         assertEquals(realRollOne, testRollOne);
         assertEquals(realSumRollOneAndTwo, testSumRollOneAndTwo);
         assertEquals(realRollThree, testRollThree);

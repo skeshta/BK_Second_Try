@@ -20,13 +20,6 @@ class BowlingFrameTest {
     }
 
     @Test
-    @DisplayName("Sum both rolls")
-    void TestSumRolls() {
-        frame.setRolls(1, 4);
-        assertEquals(5, frame.sumRollsOneAndTwo());
-    }
-
-    @Test
     @DisplayName("Extract roll 1")
     void TestGetRollOne() {
         frame.setRolls(7, 0);
@@ -34,31 +27,17 @@ class BowlingFrameTest {
     }
 
     @Test
-    @DisplayName("Extract bonus roll 1")
+    @DisplayName("Extract roll 3")
     void TestGetRollThree() {
         frame.setRolls(10, 0, 4);
         assertEquals(4, frame.getRollThree());
     }
 
     @Test
-    @DisplayName("Bonus rolls default to 0")
+    @DisplayName("Third roll defaults to 0")
     void Test0BonusRolls() {
         frame.setRolls(2, 3);
         assertEquals(0, frame.getRollThree());
-    }
-
-    @Test
-    @DisplayName("Can set one bonus roll")
-    void Test1BonusRoll() {
-        frame.setRolls(1, 9, 5);
-        assertEquals(5, frame.getRollThree());
-    }
-
-    @Test
-    @DisplayName("Can set two bonus rolls")
-    void Test2BonusRolls() {
-        frame.setRolls(10, 2, 3);
-        assertEquals(5, frame.sumRollsTwoAndThree());
     }
 
     @Test
